@@ -1,0 +1,253 @@
+/* --- General Styling --- */
+.container {
+    font-family: 'Roboto', sans-serif; /* More modern font */
+    padding: 30px; /* More padding around the form */
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f8f8f8; /* Subtle background color */
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 30px; /* More space below the title */
+    color: #006400;
+    font-size: 2em; /* Larger title */
+    font-weight: bold;
+  }
+  
+  /* --- Form Styling --- */
+  .product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* More space between form elements */
+    padding: 25px; /* More padding inside the form */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+  }
+  
+  .product-form input {
+    padding: 10px; /* More padding inside inputs */
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: white;
+    color: #333;
+    font-size: 1em; /* Slightly larger font size */
+  }
+  
+  .product-form input:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #008CBA; /* Highlight border on focus */
+    box-shadow: 0px 0px 3px rgba(0, 140, 186, 0.5); /* Add a subtle shadow on focus */
+  }
+  
+  .product-form input::placeholder {
+    color: #999;
+  }
+  
+  .add-button,
+  .product-form .add-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 3px; /* Add rounded corners to buttons */
+    transition: all 0.2s ease; /* Smooth transition for hover effects */
+  }
+  
+  .add-button:hover,
+  .product-form .add-button:hover {
+    background-color: #3e8e41; /* Slightly darker green on hover */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+  }
+  
+  .add-button:active,
+  .product-form .add-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
+    transform: translateY(1px); /* Slightly move down on click */
+  }
+  
+  .cancel-button,
+  .product-form .cancel-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+  
+  .cancel-button:hover,
+  .product-form .cancel-button:hover {
+    background-color: #d32f2f; /* Slightly darker red on hover */
+  }
+  
+  .cancel-button:active,
+  .product-form .cancel-button:active {
+    background-color: #d32f2f;
+    transform: translateY(1px);
+  }
+  
+  .toggle-form-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #e0e0e0;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .toggle-form-button:hover {
+    background-color: #c0c0c0; /* Slightly darker gray on hover */
+  }
+  
+  .toggle-form-button:active {
+    background-color: #c0c0c0;
+    transform: translateY(1px);
+  }
+  
+  /* --- Product List Styling --- */
+  .product-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px; /* More padding around items */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease; /* Add transition for hover effect */
+  }
+  
+  .product-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-item.restock {
+    background-color: #fff8e1;
+  }
+  
+  .product-item.restock .product-quantity::after {
+    content: " - Restock";
+    color: #d68400;
+    font-size: 0.9em;
+  }
+  
+  .product-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-name {
+    font-weight: bold;
+    font-size: 1.1em; /* Slightly larger name */
+  }
+  
+  .product-category {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .product-quantity {
+    font-size: 0.9em;
+  }
+  
+  /* --- Action Button Styling --- */
+  .product-actions button {
+    background: none;
+    border: none;
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: white;
+    transition: all 0.2s ease; /* Add transition for hover effects */
+  }
+  
+  .restock-button {
+    color: #fff;
+    font-size: 1.2em;
+  }
+  
+  .restock-button.active {
+    color: #4CAF50;
+  }
+  
+  .edit-button {
+    background-color: #008CBA;
+  }
+  
+  .edit-button:hover {
+    background-color: #0077a8; /* Slightly darker blue on hover */
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+/* --- Action Button Styling --- */
+.product-actions button {
+  background: none;
+  border: none;
+  padding: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  /* Remove color: white; */
+  transition: all 0.2s ease; /* Add transition for hover effects */
+}
+
+/* --- Icon Styling --- */
+
+/* Restock icon (Exclamation Triangle) */
+.product-actions .restock-button svg {
+  color: #d68400; /* Orange color - adjust as needed */
+  font-size: 1.1em;
+}
+
+.restock-button.active svg {
+  color: #4CAF50; /* Green color when active */
+}
+
+/* Edit icon (Pencil) */
+.product-actions .edit-button svg {
+  color: #008CBA; /* Blue color - adjust as needed */
+  font-size: 1.1em;
+}
+
+.edit-button:hover svg {
+    color: #0077a8;
+}
+
+/* Delete icon (Trash Can) */
+.product-actions .delete-button svg {
+  color: #f44336; /* Red color - adjust as needed */
+  font-size: 1.1em;
+}
+
+.delete-button:hover svg {
+    color: #d32f2f;
+}
