@@ -15,6 +15,7 @@
     "axios": "^1.7.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.13.3",
     "google-protobuf": "^3.21.4",
     "grpc-web": "^1.5.0",
     "jsqr": "^1.4.0",
@@ -22,6 +23,7 @@
     "qrcode": "^1.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.4.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },

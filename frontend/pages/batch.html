@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles_batch.css" />
+    <title>Quản lý nhập kho</title>
+  </head>
+  <body>
+    <header>
+      <h1>Quản lý nhập kho thuốc</h1>
+    </header>
+
+    <main>
+      <!-- Dropdown để chọn danh sách hiển thị -->
+      <section>
+        <label for="filter">Chọn trạng thái hiển thị:</label>
+        <select id="filter">
+          <option value="approved">Đơn nhập</option>
+          <option value="rejected">Đơn từ chối nhập</option>
+        </select>
+      </section>
+
+      <!-- Đơn nhập -->
+      <section id="approved-section">
+        <h2>Đơn nhập</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tên thuốc</th>
+              <th>Số lượng</th>
+            </tr>
+          </thead>
+          <!-- <tbody>
+          <% data.approved.forEach(item => { %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= item.quantity %></td>
+            </tr>
+          <% }); %>
+        </tbody> -->
+        </table>
+      </section>
+
+      <!-- Đơn từ chối nhập -->
+      <section id="rejected-section" style="display: none">
+        <h2>Đơn từ chối nhập</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tên thuốc</th>
+              <th>Số lượng</th>
+            </tr>
+          </thead>
+          <!-- <tbody>
+          <% data.rejected.forEach(item => { %>
+            <tr>
+              <td><%= item.name %></td>
+              <td><%= item.quantity %></td>
+            </tr>
+          <% }); %>
+        </tbody> -->
+        </table>
+      </section>
+
+      <!-- Form nhập kho -->
+      <section>
+        <h2>Nhập kho</h2>
+        <form action="/submit" method="POST">
+          <label for="name">Tên thuốc:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="quantity">Số lượng:</label>
+          <input type="number" id="quantity" name="quantity" required />
+
+          <!-- <label for="status">Trạng thái:</label>
+          <select id="status" name="status" required>
+            <option value="approved">Đơn nhập</option>
+            <option value="rejected">Đơn từ chối nhập</option>
+          </select> -->
+
+          <button type="submit">Thêm</button>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      // Lấy các phần tử
+      const filterDropdown = document.getElementById("filter");
+      const approvedSection = document.getElementById("approved-section");
+      const rejectedSection = document.getElementById("rejected-section");
+
+      // Lắng nghe sự kiện thay đổi trên dropdown
+      filterDropdown.addEventListener("change", () => {
+        const selectedValue = filterDropdown.value;
+
+        // Hiển thị hoặc ẩn các danh sách dựa trên lựa chọn
+        if (selectedValue === "approved") {
+          approvedSection.style.display = "block";
+          rejectedSection.style.display = "none";
+        } else if (selectedValue === "rejected") {
+          approvedSection.style.display = "none";
+          rejectedSection.style.display = "block";
+        }
+      });
+    </script>
+  </body>
+</html>
