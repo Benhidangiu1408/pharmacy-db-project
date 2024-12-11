@@ -1,0 +1,17 @@
+/* Example for styling the table */
+.table {
+  width: 90%;
+  border-collapse: collapse;
+  margin-left: 1rem; /* Add left margin */
+  margin-right: 1rem; /* Add right margin */
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border: 1px solid #0c0101;
+}
+
+.table th {
+  text-align: left;
+}

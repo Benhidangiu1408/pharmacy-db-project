@@ -20,6 +20,6 @@
       "@/*": ["frontend/src/*"]
     }
   },
-  "include": ["frontend/src"],
+  "include": ["frontend/src", "src/components/ui/input.tsx", "src/components/ui/label.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
