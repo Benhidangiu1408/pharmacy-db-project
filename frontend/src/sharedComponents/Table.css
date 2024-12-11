@@ -1,9 +1,9 @@
-/* Example for styling the table */
+/* Example for styling the table
 .table {
   width: 90%;
   border-collapse: collapse;
-  margin-left: 1rem; /* Add left margin */
-  margin-right: 1rem; /* Add right margin */
+  margin-left: 1rem; 
+  margin-right: 1rem; 
 }
 
 .table th,
@@ -14,4 +14,53 @@
 
 .table th {
   text-align: left;
+} */
+
+.table {
+  max-width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  text-align: left;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+  background-color: #007bff;
+  /* color: white; */
+  font-weight: bold;
+  padding: 12px;
+  text-align: left;
+  border: 1px solid black;
+}
+
+.table td {
+  padding: 12px;
+  color: white;
+  border: 1px solid black;
+}
+
+.table tr:nth-child(even) {
+  color: white;
+  background-color: #f2f2f2;
+}
+
+.table tr:nth-child(odd) {
+  color: #f2f2f2 !important;
+  background-color: #f2f2f2 !important;
+}
+
+/* .table tr:hover {
+  background-color: #d1e7ff;
+} */
+
+.table th,
+.table td {
+  text-align: center;
+  max-width: 100px;
+}
+
+.table-group-divider {
+  margin-top: 8px;
 }
