@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Layout from '../components/view/_layout';
+import Product from '../components/view/Product';
 
-const HomePage = () => {
+const ProductView: React.FC = () => {
   return (
-    <div>HomePage</div>
-  )
-}
+    <Layout>
+      HomePage
+    </Layout>
+  );
+};
 
-export default HomePage
+export default ProductView;
