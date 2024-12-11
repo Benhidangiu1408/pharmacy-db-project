@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaPlus, FaEdit, FaTrash, FaExclamationTriangle, FaCheck } from 'react-icons/fa';
 import JsonTable from './jsonTable'; // Import the table component
-import './input.css';
+import './Product.css';
 
 // --- Data Structure ---
 interface Product {
