@@ -16,11 +16,13 @@ import OrderDetail from "./pages/admin/OrderDetail";
 import BatchDetail from "./pages/batchManager/BatchDetail";
 import ProductDetail from "./pages/productManager/ProductDetail";
 import GrpcData from "./pages/test";
+import ProductView from "./pages/view/ProductView";
 
 const routes = createBrowserRouter([
     
     { path: "/", element: <HomePage /> },
     { path: "/signin", element: <Signin /> },
+    { path: "/viewproduct", element: <ProductView /> },
     {
       element: <PrivateRoute />,
       children: [
