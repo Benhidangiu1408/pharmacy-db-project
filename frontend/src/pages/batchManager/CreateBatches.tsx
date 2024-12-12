@@ -1,7 +1,8 @@
-import React from 'react'
+import React from "react";
+import DrugInventoryForm from "../../components/view/form";
 
-export const CreateBatches = () => {
-  return (
-    <div>CreateBatches</div>
-  )
-}
+const FormView: React.FC = () => {
+  return <DrugInventoryForm />;
+};
+
+export default FormView;
