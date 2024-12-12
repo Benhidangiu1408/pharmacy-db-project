@@ -1,8 +1,8 @@
 import React from "react";
-import DrugInventoryForm from "../../components/view/form";
+import BatchForm from "../../components/view/formCreateBatch";
 
-const FormView: React.FC = () => {
-  return <DrugInventoryForm />;
+const BatchFormView: React.FC = () => {
+  return <BatchForm />;
 };
 
-export default FormView;
+export default BatchFormView;

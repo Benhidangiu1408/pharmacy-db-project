@@ -43,16 +43,17 @@ label {
   margin-right: 10px; /* Add spacing between label and input */
 }
 
-button {
-  padding: 10px;
-  background-color: rgb(48, 104, 172);
+.form_button {
+  background-color: blue;
   color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
   border: none;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: rgb(0, 58, 128);
+.form_button:hover {
+  background-color: darkblue;
 }
 
 p {
@@ -75,5 +76,45 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .content-container {
-    margin-top: 100px; /* Adjust to create enough space */
-  }
+  margin-top: 10px; /* Adjust to create enough space */
+  /* overflow: hidden; */
+}
+
+.error-message {
+  color: red; /* Màu chữ đỏ */
+  font-weight: bold; /* Chữ đậm */
+  background-color: #fff3f3; /* Màu nền nhẹ */
+  padding: 10px; /* Khoảng cách từ viền */
+  border: 1px solid red; /* Đường viền đỏ */
+  border-radius: 5px; /* Bo tròn các góc */
+  margin-top: 10px; /* Khoảng cách trên */
+  position: absolute; /* Vị trí tuyệt đối */
+  top: 20px; /* Khoảng cách từ trên cùng */
+  left: 50%; /* Canh giữa */
+  transform: translateX(-50%); /* Căn giữa chính xác */
+  z-index: 1000; /* Đảm bảo thông báo luôn ở trên */
+}
+
+.form-message {
+  margin-bottom: 20px; /* Tạo khoảng cách giữa thông báo và nút */
+  color: black; /* Màu xanh lá cho thông báo thành công */
+  font-weight: bold;
+  text-align: center; /* Canh giữa thông báo */
+}
+
+.form-message p {
+  color: red; /* Màu đỏ nếu là thông báo lỗi */
+  font-size: 14px;
+}
+
+.form-message.success {
+  color: green;
+}
+
+.form-message.error {
+  color: red;
+}
+
+/* .page {
+  size: auto;
+} */
