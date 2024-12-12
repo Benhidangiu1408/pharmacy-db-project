@@ -28,7 +28,7 @@ const formVariants = {
 };
 
 // --- Main Component ---
-const ProductView: React.FC = () => {
+const BatchView: React.FC = () => {
   const { isLoading, isError, data, error } = useProducts();
   const products = data? data.products : [];
   const nameRef = useRef<HTMLInputElement>(null);
@@ -59,7 +59,7 @@ const ProductView: React.FC = () => {
       animate="visible"
       variants={containerVariants}
     >
-      <h1 className="title">Drugstore Product Inventory</h1>
+      <h1 className="title">Drugstore Batch</h1>
 
       <button className="toggle-form-button" onClick={() => addProduct()}>
         Add New Product
@@ -75,4 +75,4 @@ const ProductView: React.FC = () => {
   );
 };
 
-export default ProductView;
+export default BatchView;

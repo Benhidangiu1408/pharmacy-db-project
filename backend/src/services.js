@@ -37,4 +37,37 @@ const fetchUsers = async (call, callback) => {
 //     }
 //   }
 
-module.exports = { fetchUsers };
+const fetchProductList = async (call, callback) => {
+  try {
+    const [results] = await db.query('CALL batch_product.GetProductList()');
+
+    // results[0] because stored procedure results are nested in an extra array
+    const products = results[0].map(product => ({
+      id: product.ID,
+      employee_id: product.Employee_ID,
+      name: product.Name,
+      description: product.Description,
+      origin: product.Origin,
+      tag: product.Tag,
+      storage_condition: product.Storage_Condition,
+      country_of_origin: product["Country of origin"], // Handle names with spaces
+      price: product.Price,
+      directions_for_use: product["Directions for use"], // Handle names with spaces
+      certificate: product.Certificate,
+      warning: product.Warning,
+      intended_user: product["Intended User"], // Handle names with spaces
+      total_amount_from_batch: product["Total amount from batch"], // Handle names with spaces
+    }));
+
+    callback(null, { products }); // Return an object with a 'products' field
+
+  } catch (error) {
+    console.error('Database error:', error);
+    callback({
+      code: grpc.status.INTERNAL, // Use grpc.status for better error codes
+      details: 'Database error',
+    });
+  }
+};
+
+module.exports = { fetchUsers, fetchProductList };
