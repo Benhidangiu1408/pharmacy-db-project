@@ -28,36 +28,7 @@ html, body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-/* Product Form */
-.product-form {
-  display: flex;
-  flex-wrap: wrap; /* Allow form elements to wrap */
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.product-form input,
-.product-form button {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.product-form input {
-  flex: 1; /* Allow inputs to take available space */
-  min-width: 150px; /* Prevent inputs from becoming too narrow */
-  background-color: #333;
-}
-
-.product-form .add-button,
-.product-form .cancel-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
+} 
 /* Block: json-table */
 .json-table {
   width: 100%;
@@ -88,8 +59,8 @@ html, body {
 }
 
 .json-table__row:hover {
-  transform: scale(1.01); /* Slightly smaller scale on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* More prominent shadow on hover */
+  transform: scale(1.005); /* Slightly smaller scale on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* More prominent shadow on hover */
 }
 
 /* Hover effect for action buttons */
@@ -112,7 +83,7 @@ html, body {
 .json-table__action-buttons {
   display: flex;
   gap: 8px; /* Increased space between buttons */
-  opacity: 0.3; /* Initially hide the action buttons */
+  opacity: 0.7; /* Initially hide the action buttons */
   transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Smooth transition for opacity and scale */
   transform: scale(0.8); /* Initially scale down the buttons */
   transform-origin: center; /* Scale from the center */
@@ -135,52 +106,52 @@ html, body {
   /* Icon styles */
   svg {
     fill: currentColor;
-    width: 18px; /* Slightly smaller icon size */
-    height: 18px; /* Slightly smaller icon size */
+    width: 25px; /* Slightly smaller icon size */
+    height: 25px; /* Slightly smaller icon size */
     transition: transform 0.2s ease-in-out; /* Add transition for icon transform */
   }
+}
 
-  /* Modifier: json-table edit button */
-  &--edit {
-    color: #ffc107;
 
-    &:hover {
-      background-color: #ffc107;
-      color: #fff;
-      transform: rotate(45deg); /* Rotate on hover */
-    }
-    &:active {
-        transform: scale(0.95) rotate(45deg); /* Slightly shrink when active */
-      }
-  }
+/* Modifier: json-table edit button */
+.json-table__button--edit { /* Full class name */
+  color: #ffc107;
+}
 
-  /* Modifier: json-table delete button */
-  &--delete {
-    color: #dc3545;
+.json-table__button--edit:hover {
+  transform: rotate(45deg);
+}
 
-    &:hover {
-      background-color: #dc3545;
-      color: #fff;
-      transform: rotate(-45deg); /* Rotate on hover */
-    }
+.json-table__button--edit:active {
+  transform: scale(0.95) rotate(45deg);
+}
 
-    &:active {
-        transform: scale(0.95) rotate(-45deg); /* Slightly shrink when active */
-      }
-  }
+/* Modifier: json-table delete button */
+.json-table__button--delete { /* Full class name */
+  color: #dc3545;
+}
 
-  /* Modifier: json-table expand button */
-  &--expand {
-    color: #333;
-    padding: 5px; /* Add padding back for expand button */
+.json-table__button--delete:hover {
+  transform: rotate(-45deg);
+}
 
-    &:hover {
-      background-color: #eee;
-    }
-    &:active {
-        transform: scale(0.95); /* Slightly shrink when active */
-      }
-  }
+.json-table__button--delete:active {
+  transform: scale(0.95) rotate(-45deg);
+}
+
+/* Modifier: json-table expand button */
+.json-table__button--expand { /* Full class name */
+  color: #333;
+  padding: 5px;
+}
+
+.json-table__button--expand:hover {
+  background-color: #eee;
+  transform: scale(0.85);
+}
+
+.json-table__button--expand:active {
+  transform: scale(0.95);
 }
 
 /* Add styles for the expanded row */

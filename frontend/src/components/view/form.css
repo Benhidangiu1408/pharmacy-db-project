@@ -43,7 +43,7 @@ label {
   margin-right: 10px; /* Add spacing between label and input */
 }
 
-button {
+/* button {
   padding: 10px;
   background-color: rgb(48, 104, 172);
   color: white;
@@ -53,7 +53,7 @@ button {
 
 button:hover {
   background-color: rgb(0, 58, 128);
-}
+} */
 
 p {
   margin-top: 20px;
