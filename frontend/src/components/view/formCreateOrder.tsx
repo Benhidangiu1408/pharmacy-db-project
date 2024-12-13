@@ -154,7 +154,7 @@ const OrderForm = () => {
           </div>
         )}
 
-        <button className="form_button" type="submit">
+        <button className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]" type="submit">
           Xác nhận
         </button>
       </form>

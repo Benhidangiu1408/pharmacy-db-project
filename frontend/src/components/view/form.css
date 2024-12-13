@@ -10,7 +10,7 @@ form {
   align-items: center; /* Center horizontally */
   width: 1000px; /* Optional: set width for form */
   margin: 0 auto; /* Center horizontally within the page */
-  height: 100vh; /* Full height for vertical centering */
+  height: 130vh; /* Full height for vertical centering */
 }
 
 div {
@@ -45,16 +45,17 @@ label {
 
 create-form
 .form_button {
-  background-color: blue;
-  color: white;
+  background-color:#e6f7ff;
+  /* color: white; */
   padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
+  border-radius: 10px;
+ 
+  border: 2px solid black;
   cursor: pointer;
 }
 
 .form_button:hover {
-  background-color: darkblue;
+  background-color:green;
 }
 
 p {
