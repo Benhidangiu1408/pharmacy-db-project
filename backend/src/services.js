@@ -219,7 +219,11 @@ const showOrderStatus = async (call, callback) => {
 const showShipperInfo = async (call, callback) => {
   try {
       const [rows] = await db.query(`CALL order_cus_voucher.ShowShipperInfo()`);
-      callback(null, { shippers: rows } );
+      const shippers = rows[0].map(shipper => ({
+        shipper_id : shipper.Shipper_ID,
+        shipper_name : shipper.Shipper_Name
+      }));
+      callback(null, { shippers: shippers } );
   } catch (error) {
       console.error('Database error:', error);
       callback({ code: 13, details: 'Database error while fetching shipper info' });
