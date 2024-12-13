@@ -30,12 +30,6 @@ export interface UpdateEmployeeJobType{
     id:number;
     new_job_type:string
 }
-
-export enum JobType {
-    PHARMACIST = 0,
-    INVENTORY_MANAGER = 1,
-    PRODUCT_MANAGER = 2,
-}
   
   // Interface for SigninRequest
 export interface SigninRequest {
@@ -46,5 +40,6 @@ export interface SigninRequest {
   // Interface for SigninResponse
 export interface SigninResponse {
     id: number;
-    jobType: JobType;
+    jobType: string;
+    name: string;
 }

@@ -54,10 +54,12 @@ const signin = async (call, callback) => {
     // Access the OUT parameters from the result set
     const empID = SigninResponse.ID;
     const employeeJobType = SigninResponse.JobType;    
+    const eName = SigninResponse.Name;    
 
     callback(null, {
       id : empID,
-      jobType : employeeJobType
+      jobType : employeeJobType,
+      name : eName
     });
   } catch (error) {
     console.error("Database error:", error);

@@ -3,11 +3,18 @@ import "./signin.css";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSigninEmployee } from "../hooks/useSigninEmployee";
+import axios, { AxiosError } from 'axios';
+import { SigninRequest, SigninResponse } from "../entities/Employee";
+
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [account, setAccount] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState<SigninResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -15,17 +22,37 @@ const Signin = () => {
 
   const navigate = useNavigate();
 
-  const validate = useSigninEmployee();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    var bruh;
+    try {
+      const response = await axios.post<SigninResponse>(
+        'http://localhost:8080/signin',
+        {
+          account: email,
+          password: password,
+        }
+      );
+  
+      setResponse(response.data);
+      console.log(response.data)
+      bruh = response.data
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<SigninResponse>;
+        if (serverError && serverError.response) {
+          setError('An error occurred during sign-in');
+        } else {
+          setError('Network error or request was cancelled');
+        }
+      } else {
+        setError('An unexpected error occurred');
+      }
+    } finally {
+      setIsLoading(false);
+    }
 
-    const response = validate.mutate({
-      account: email,
-      password: password,
-    });
-
-    if (response.id) {
+    if (bruh.id) {
       // login(user);
       navigate("/homepage");
     } else {
