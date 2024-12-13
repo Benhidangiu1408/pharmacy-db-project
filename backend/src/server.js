@@ -1,6 +1,6 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { fetchUsers } = require('./services');
+const { fetchUsers, fetchProductList } = require('./services');
 
 const PROTO_PATH = './protos/service.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -13,7 +13,7 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 const databaseService = protoDescriptor.DatabaseService;
 
 const server = new grpc.Server();
-server.addService(databaseService.service, { GetUser: fetchUsers });
+server.addService(databaseService.service, { GetUser: fetchUsers, GetProductList: fetchProductList });
 
 const PORT = 50051;
 server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {

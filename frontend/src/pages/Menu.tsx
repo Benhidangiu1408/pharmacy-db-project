@@ -18,6 +18,12 @@ const Menu: React.FC = () => {
       <a href="/homepage/showproducts" className="menu_left">
         Sản phẩm
       </a>
+      <a href="/homepage/showallorders" className="menu_left">
+        Đơn
+      </a>
+      <a href="/homepage/showbatches" className="menu_left">
+        Batch
+      </a>
       <div className="menu_right dropdown">
         <button className="dropbtn">
           <span className="caret">▼</span>

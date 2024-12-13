@@ -36,6 +36,21 @@ app.get('/api/v1/example/:id', (req, res) => {
     });
 });
 
+// Endpoint to get the product list
+app.get('/api/v1/products', (req, res) => {
+    client.GetProductList({}, (err, response) => { // Use an empty object {} for the Empty message
+      if (err) {
+        console.error("gRPC Error:", err);
+        if (err.code === grpc.status.UNIMPLEMENTED) {
+          res.status(501).send({ error: "gRPC method not implemented on the server" });
+        } else {
+          res.status(500).send({ error: "An error occurred while fetching data from gRPC server" });
+        }
+      } else {
+        res.json(response); // Use the generated getter for the repeated field
+      }
+    });
+  });
 // Serve Frontend Static Files
 // app.use(express.static(path.join(__dirname, 'dist')));
 
