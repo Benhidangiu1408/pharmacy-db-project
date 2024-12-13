@@ -3,7 +3,7 @@ import "./form.css";
 
 const BatchForm = () => {
   // Tạo các ref cho các input
-  // const nameRef = useRef<HTMLInputElement>(null);
+  const IDRef = useRef<HTMLSelectElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
   const typeRef = useRef<HTMLSelectElement>(null);
   const expiryDateRef = useRef<HTMLInputElement>(null);
@@ -69,10 +69,14 @@ const BatchForm = () => {
     <div className="content-container">
       <h1>NHẬP THÔNG TIN SẢN PHẨM</h1>
       <form onSubmit={handleSubmit}>
-        {/* <div>
-          <label>Tên sản phẩm:</label>
-          <input type="text" name="name" ref={nameRef} required />
-        </div> */}
+        <div>
+          <label>ID sản phẩm:</label>
+          <select name="name" ref={IDRef} required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
         <div>
           <label>Số lượng:</label>
           <input type="number" name="quantity" ref={quantityRef} required />
@@ -103,7 +107,10 @@ const BatchForm = () => {
             <p>{message}</p>
           </div>
         )}
-        <button className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]" type="submit">
+        <button
+          className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]"
+          type="submit"
+        >
           Xác nhận
         </button>
       </form>
