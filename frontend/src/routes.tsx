@@ -18,6 +18,7 @@ import ProductDetail from "./pages/productManager/ProductDetail";
 import GrpcData from "./pages/test";
 import ProductView from "./pages/view/ProductView";
 import ShowAccount from "./pages/admin/ShowAccount";
+import HomePageAfterSignin from "./pages/HomePageAfterSignin";
 
 const routes = createBrowserRouter([
   { path: "/", element: <HomePage /> },
@@ -31,7 +32,8 @@ const routes = createBrowserRouter([
         path: "/homepage",
         element: <Layout />,
         children: [
-          { index: true, element: <CreateAccount /> }, // Default child of /homepage
+          { index: true, element: <HomePageAfterSignin /> }, // Default child of /homepage
+          { path: "CreateAccount", element: <CreateAccount /> }, // Default child of /homepage
           { path: "CreateOrders", element: <CreateOrders /> }, // Relative path; becomes /homepage/printing
           { path: "CreateProducts", element: <CreateProducts /> }, // Becomes /homepage/printers
           { path: "CreateBatches", element: <CreateBatches /> }, // Becomes /homepage/orders

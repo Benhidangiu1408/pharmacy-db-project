@@ -26,7 +26,7 @@ const Menu: React.FC = () => {
           </a>
           <a href="#">Hồ sơ</a>
 
-          <a href="/homePage/home2">Thoát</a>
+          <a href="/">Thoát</a>
         </>
       );
     }
@@ -39,7 +39,7 @@ const Menu: React.FC = () => {
           </a>
           <a href="#">Hồ sơ</a>
 
-          <a href="/homePage/home2">Thoát</a>
+          <a href="/">Thoát</a>
         </>
       );
     }
@@ -53,7 +53,7 @@ const Menu: React.FC = () => {
 
           <a href="#">Hồ sơ</a>
 
-          <a href="/homePage/home2">Thoát</a>
+          <a href="/">Thoát</a>
         </>
       );
     }
@@ -67,7 +67,7 @@ const Menu: React.FC = () => {
 
           <a href="#">Hồ sơ</a>
 
-          <a href="/homePage/home2">Thoát</a>
+          <a href="/">Thoát</a>
         </>
       );
     }

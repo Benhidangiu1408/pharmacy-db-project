@@ -5,6 +5,8 @@ import JsonTable from "./jsonTable"; // Import the table component
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
+import { Navigate, Outlet } from "react-router-dom";
+
 // --- Framer Motion Variants ---
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -50,7 +52,7 @@ const OrderView: React.FC = () => {
 
   const handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
 
-  const addProduct = () => {};
+  const addProduct = () => navigate("/homepage/CreateOrders");
 
   return (
     <motion.div
@@ -59,10 +61,10 @@ const OrderView: React.FC = () => {
       animate="visible"
       variants={containerVariants}
     >
-      <h1 className="title">Drugstore Order Inventory</h1>
+      <h1 className="title">Đơn Thuốc</h1>
 
       <button className="toggle-form-button" onClick={() => addProduct()}>
-        Add New Product
+        Thêm Đơn
       </button>
 
       {/* Using the JsonTable component */}

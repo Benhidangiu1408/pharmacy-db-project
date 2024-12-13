@@ -1,8 +1,9 @@
 import React from 'react'
+import EmployeeView from '../../components/view/Employee'
 
 const ShowAccount = () => {
   return (
-    <div>ShowAccount</div>
+    <EmployeeView/>
   )
 }
 

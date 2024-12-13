@@ -30,7 +30,7 @@ const formVariants = {
 };
 
 // --- Main Component ---
-const BatchView: React.FC = () => {
+const EmployeeView: React.FC = () => {
   const { isLoading, isError, data, error } = useProducts();
   const products = data? data.products : [];
   const nameRef = useRef<HTMLInputElement>(null);
@@ -52,7 +52,7 @@ const BatchView: React.FC = () => {
 
   const handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
 
-  const addProduct = () => navigate("/homepage/CreateBatches");
+  const addProduct =() => navigate("/homepage/CreateAccount");
 
   return (
     <motion.div
@@ -61,10 +61,10 @@ const BatchView: React.FC = () => {
       animate="visible"
       variants={containerVariants}
     >
-      <h1 className="title">Đơn Kho</h1>
+      <h1 className="title">Nhân Viên</h1>
 
       <button className="toggle-form-button" onClick={() => addProduct()}>
-        Nhập Kho
+        Thêm Tài Khoản
       </button>
 
       {/* Using the JsonTable component */}
@@ -77,4 +77,4 @@ const BatchView: React.FC = () => {
   );
 };
 
-export default BatchView;
+export default EmployeeView;
