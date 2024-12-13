@@ -223,7 +223,7 @@ const showShipperInfo = async (call, callback) => {
         shipper_id : shipper.Shipper_ID,
         shipper_name : shipper.Shipper_Name
       }));
-      callback(null, { shippers: shippers } );
+      callback(null, { shippers } );
   } catch (error) {
       console.error('Database error:', error);
       callback({ code: 13, details: 'Database error while fetching shipper info' });
