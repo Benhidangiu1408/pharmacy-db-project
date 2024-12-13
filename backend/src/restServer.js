@@ -36,6 +36,32 @@ app.get('/api/v1/example/:id', (req, res) => {
     });
 });
 
+app.post("/signin", (req, res) => {
+    const { account, password } = req.body;
+  
+    // Validate input
+    if (!account || !password) {
+      return res.status(400).json({ error: "Account and password are required." });
+    }
+  
+    // Call the gRPC signin function
+    client.Signin({ account, password }, (err, response) => {
+      if (err) {
+        console.error("gRPC error:", err);
+        // Handle gRPC errors and map them to HTTP status codes
+        const statusMap = {
+          5: 404, // NOT_FOUND
+          13: 500, // INTERNAL
+        };
+        return res
+          .status(statusMap[err.code] || 500)
+          .json({ error: err.details || "Internal server error" });
+      }
+  
+      // Respond with the signin data
+      res.json(response);
+    });
+  });
 
 app.post('/api/v1/insertEmployee', (req, res) => {
     const {

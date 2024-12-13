@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+
+.header {
+    background: linear-gradient(to right, #FFFFFF, #FFBBB9);
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  
+  .header .logo {
+    display: flex; /* Ensure logo and text align properly */
+    align-items: center;
+    justify-content: flex-start; /* Align content to the left */
+    position: relative; /* Allows precise placement */
+    margin-left: 50px; /* Adjust this value for spacing from the left */
+  }
+  
+  .header .logo img {
+    width: 50px;
+    margin-left: 4px;
+  }
+  
+  .header .buttons {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+  }
+  
+  .header .button {
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    padding: 8px;
+    border-radius: 24px;
+    transition: opacity 0.3s, background-color 0.3s;
+  }
+  
+  .header .button:hover {
+    opacity: 0.6;
+    background-color: white;
+  }
+  
+  .header .button + .button {
+    margin-left: 30px;
+  }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .main {
+    position: relative;
+  }
+  
+  .main .background {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .main .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #FFFFFF, #FFBBB9);
+    opacity: 0.5;
+    height: 524px;
+  }
+
+  .main .overlay2 {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #FFFFFF, #FFBBB9);
+    opacity: 0.5;
+    height: 650px; /* Adjust this value as needed */
+  }
+  
+  .main .content {
+    position: relative;
+    z-index: 5;
+    display: flex;
+  }
+  
+  .main .content .text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer {
+    background: linear-gradient(to right, #FFFFFF, #FFBBB9);
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+  
+  .footer .info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }

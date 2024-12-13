@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import JsonTable from "./jsonTable"; // Import the table component
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
 import { Navigate, Outlet } from "react-router-dom";
-import { useEmployees } from "../../hooks/useEmployees";
+import { useAdminOrder, useEmployeeOrder } from "../../hooks/useOrders";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -31,10 +31,9 @@ const formVariants = {
 };
 
 // --- Main Component ---
-const EmployeeView: React.FC = () => {
-  //   const { isLoading, isError, data, error } = useProducts();
-  const { data, isLoading, error } = useEmployees();
-  const products = data? data.employees : [];
+const OrderEmployeeView: React.FC = () => {
+  const { isLoading, isError, data, error } = useEmployeeOrder();
+  const products = data? data.orders : [];
   const nameRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
@@ -48,19 +47,13 @@ const EmployeeView: React.FC = () => {
     }
   };
 
-  const handleEditProduct = (product: Product) => {
-    navigate("/homepage/productdetail", { state: { product: product } });
-  };
+  const handleEditProduct = (product: Product) => {navigate('/homepage/productdetail', { state: { product: product } });};
 
-  const handleDeleteProduct = (productId: number) => {
-    navigate("/delete/product", { state: { int: productId } });
-  };
+  const handleDeleteProduct = (productId: number) => {navigate('/delete/product', { state: { int: productId } });};
 
-  const handleToggleRestock = (productId: number) => {
-    navigate("/restock/product", { state: { int: productId } });
-  };
+  const handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
 
-  const addProduct = () => navigate("/homepage/CreateAccount");
+  const addProduct = () => navigate("/homepage/CreateOrders");
 
   return (
     <motion.div
@@ -69,10 +62,10 @@ const EmployeeView: React.FC = () => {
       animate="visible"
       variants={containerVariants}
     >
-      <h1 className="title">Nhân Viên</h1>
+      <h1 className="title">Đơn Thuốc</h1>
 
       <button className="toggle-form-button" onClick={() => addProduct()}>
-        Thêm Tài Khoản
+        Thêm Đơn
       </button>
 
       {/* Using the JsonTable component */}
@@ -85,4 +78,4 @@ const EmployeeView: React.FC = () => {
   );
 };
 
-export default EmployeeView;
+export default OrderEmployeeView;

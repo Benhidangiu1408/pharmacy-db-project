@@ -1,8 +1,8 @@
 import React from 'react'
-import Order from "../../components/view/Order";
+import OrderEmployeeView from '../../components/view/OrderEmployee';
 
 const ShowOrder = () => {
-  return <Order />;
+  return <OrderEmployeeView />;
 }
 
 export default ShowOrder

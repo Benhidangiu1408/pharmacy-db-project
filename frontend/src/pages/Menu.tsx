@@ -21,7 +21,7 @@ const Menu: React.FC = () => {
           <a href="/homepage/CreateBatches" className="menu_left">
             Nhập Kho
           </a>
-          <a href="/homepage/ShowAccount" className="menu_left">
+          <a href="/homepage/CreateAccount" className="menu_left">
             Tạo Tài Khoản Nhân viên
           </a>
           <a href="#">Hồ sơ</a>
