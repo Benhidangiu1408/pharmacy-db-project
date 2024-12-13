@@ -21,6 +21,7 @@ const CreateAccount = () => {
   //   return null; // Return nothing or fallback JSX
   // }
   const shippersData = data?.shippers;
+  console.log(shippersData);
   return (
     <>
       <h1>{shippersData?.map((shipper) => shipper.id)}</h1>
