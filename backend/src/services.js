@@ -251,30 +251,54 @@ const fetchProductList = async (call, callback) => {
   try {
     const [results] = await db.query('CALL batch_product.GetProductList()');
 
-    // results[0] because stored procedure results are nested in an extra array
-    const products = results[0].map(product => ({
-      id: product.ID,
-      employee_id: product.Employee_ID,
-      name: product.Name,
-      description: product.Description,
-      origin: product.Origin,
-      tag: product.Tag,
-      storage_condition: product.Storage_Condition,
-      country_of_origin: product["Country of origin"], // Handle names with spaces
-      price: product.Price,
-      directions_for_use: product["Directions for use"], // Handle names with spaces
-      certificate: product.Certificate,
-      warning: product.Warning,
-      intended_user: product["Intended User"], // Handle names with spaces
-      total_amount_from_batch: product["Total amount from batch"], // Handle names with spaces
-    }));
+    const products = results[0].map(product => {
+      const productData = {
+        id: product.ID,
+        employee_id: product.Employee_ID,
+        name: product.Name,
+        description: product.Description,
+        origin: product.Origin,
+        tag: product.Tag,
+        storage_condition: product.Storage_Condition,
+        country_of_origin: product["Country of origin"],
+        price: product.Price,
+        directions_for_use: product["Directions for use"],
+        certificate: product.Certificate,
+        warning: product.Warning,
+        intended_user: product["Intended User"],
+        total_amount_from_batch: product["Total amount from batch"],
+        product_type: product.ProductType.toUpperCase(),
 
-    callback(null, { products }); // Return an object with a 'products' field
+        // Add fields directly, prefixed with product type
+        consumable_ingredient: product.Ingredient,
+        consumable_serving_size: product.Serving_size,
+        consumable_dosage: product.Dosage,
+        consumable_dosage_form: product.Dosage_form,
+        consumable_constraindication: product.Constraindication,
+
+        medicine_side_effect: product.Side_effect,
+        medicine_indication: product.Indication,
+        medicine_is_prescription_medicine: product.Is_Prescription_Medicine,
+
+        supplement_allergen_info: product.Allergen_info,
+
+        medical_equipment_usage_instruction: product.Usage_Instruction,
+        medical_equipment_material: product.Material,
+        medical_equipment_size_dimension: product["Size/Dimension"],
+        medical_equipment_requirement: product.Requirement,
+        medical_equipment_warranty: product.Warranty,
+        medical_equipment_sterility: product.Sterility,
+      };
+
+      return productData;
+    });
+
+    callback(null, { products });
 
   } catch (error) {
     console.error('Database error:', error);
     callback({
-      code: grpc.status.INTERNAL, // Use grpc.status for better error codes
+      code: grpc.status.INTERNAL,
       details: 'Database error',
     });
   }
