@@ -7,9 +7,10 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  getAll = (config?: AxiosRequestConfig) => {
+  getAll = (id?: string | number,config?: AxiosRequestConfig) => {
+    const url= id? `${this.endpoint}/${id}`: this.endpoint
     return axios
-      .get<T[]>(this.endpoint, config)
+      .get<T[]>(url, config)
       .then((res) => res.data)
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -17,12 +18,33 @@ class APIClient<T> {
       });
   };
 
-  get = (id: string | number, config?: AxiosRequestConfig) => {
+  get = (id?: string | number, config?: AxiosRequestConfig) => {
+    const url= id? `${this.endpoint}/${id}`: this.endpoint
     return axios
-      .get<T>(`${this.endpoint}/${id}`, config)
+      .get<T>(url, config)
       .then((res) => res.data)
       .catch((error) => {
         console.error("Error fetching data by ID:", error);
+        throw error;
+      });
+  };
+
+  create = (data: T, config?: AxiosRequestConfig) => {
+    return axios
+      .post<T>(this.endpoint, data, config)
+      .then((res) => res.data)
+      .catch((error) => {
+        console.error("Error creating data:", error);
+        throw error;
+      });
+  };
+
+  update = ( data: Partial<T>, config?: AxiosRequestConfig) => {
+    return axios
+      .post<T>(this.endpoint, data, config)
+      .then((res) => res.data)
+      .catch((error) => {
+        console.error("Error updating data:", error);
         throw error;
       });
   };

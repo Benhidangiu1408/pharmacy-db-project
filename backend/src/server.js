@@ -1,6 +1,17 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const { fetchUsers, fetchProductList } = require('./services');
+
+const { fetchUsers,insertEmployee,
+  updateEmployeePassword,
+  updateEmployeeJobType, showAllEmployees,
+  showOneEmployee,
+  insertOrder,
+  getAllOrders,
+  getEmployeeOrders,
+  showOrderStatus,
+  showShipperInfo,
+  getCustomerDetails,fetchProductList } = require('./services');
+
 
 const PROTO_PATH = './protos/service.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -13,7 +24,18 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
 const databaseService = protoDescriptor.DatabaseService;
 
 const server = new grpc.Server();
-server.addService(databaseService.service, { GetUser: fetchUsers, GetProductList: fetchProductList });
+
+server.addService(databaseService.service, { GetUser: fetchUsers,InsertEmployee: insertEmployee,
+  UpdateEmployeePassword: updateEmployeePassword,
+  UpdateEmployeeJobType: updateEmployeeJobType,ShowAllEmployees: showAllEmployees,
+  ShowOneEmployee: showOneEmployee,
+  InsertOrder: insertOrder,
+  GetAllOrders: getAllOrders,
+  GetEmployeeOrders: getEmployeeOrders,
+  ShowOrderStatus: showOrderStatus,
+  ShowShipperInfo: showShipperInfo,
+  GetCustomerDetails: getCustomerDetails, GetProductList: fetchProductList});
+
 
 const PORT = 50051;
 server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
