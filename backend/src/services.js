@@ -220,8 +220,8 @@ const showShipperInfo = async (call, callback) => {
   try {
       const [rows] = await db.query(`CALL order_cus_voucher.ShowShipperInfo()`);
       const shippers = rows[0].map(shipper => ({
-        shipper_id : shipper.Shipper_ID,
-        shipper_name : shipper.Shipper_Name
+        id : shipper.Shipper_ID,
+        name : shipper.Shipper_Name
       }));
       callback(null, { shippers } );
   } catch (error) {
