@@ -17,6 +17,7 @@ import BatchDetail from "./pages/batchManager/BatchDetail";
 import ProductDetail from "./pages/productManager/ProductDetail";
 import GrpcData from "./pages/test";
 import ProductView from "./pages/view/ProductView";
+import ShowAccount from "./pages/admin/ShowAccount";
 
 const routes = createBrowserRouter([
   { path: "/", element: <HomePage /> },
@@ -39,6 +40,8 @@ const routes = createBrowserRouter([
           { path: "ShowBatches", element: <ShowBatches /> },
           { path: "ShowOrder", element: <ShowOrder /> },
           { path: "ShowProducts", element: <ShowProducts /> },
+          { path: "ShowAccount", element: <ShowAccount /> },
+
 
           { path: "OrderDetail", element: <OrderDetail /> },
           { path: "BatchDetail", element: <BatchDetail /> },
