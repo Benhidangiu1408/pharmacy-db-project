@@ -15,4 +15,5 @@ export interface Product {
     warning: string;
     intended_user: string;
     total_amount_from_batch: number;
+    type: string
   }

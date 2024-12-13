@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import "./form.css";
+import useBatchStore from "../../current_data/batch";
 
 const BatchForm = () => {
+  const { getAllBatches } = useBatchStore(); // Lấy hàm login
+  const batches = getAllBatches();
+
   // Tạo các ref cho các input
   const IDRef = useRef<HTMLSelectElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
@@ -67,40 +71,79 @@ const BatchForm = () => {
 
   return (
     <div className="content-container">
-      <h1>NHẬP THÔNG TIN SẢN PHẨM</h1>
+      <h1>THÔNG TIN LÔ HÀNG</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>ID sản phẩm:</label>
-          <select name="name" ref={IDRef} required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-        </div>
-        <div>
-          <label>Số lượng:</label>
-          <input type="number" name="quantity" ref={quantityRef} required />
-        </div>
-        <div>
-          <label>Loại:</label>
-          <select name="type" ref={typeRef} required>
-            <option value="Thuốc">Thuốc</option>
-            <option value="Thực phẩm chức năng">Thực phẩm chức năng</option>
-            <option value="Equipment">Equipment</option>
-          </select>
-        </div>
-        <div>
-          <label>Ngày sản xuất:</label>
-          <input
-            type="date"
-            name="manufacturingDate"
-            ref={manufacturingDateRef}
-            required
-          />
-        </div>
-        <div>
-          <label>Hạn sử dụng:</label>
-          <input type="date" name="expiryDate" ref={expiryDateRef} required />
+          {batches.map((product, index) => (
+            <div key={index} className="mb-4">
+              <div>
+                <label>Tên sản phẩm:</label>
+                <p>{product.name} </p>
+              </div>
+
+              <div>
+                <label>Số lượng:</label>
+                <p>{product.quantity}</p>
+              </div>
+
+              <div>
+                <label>Loại:</label>
+               <p>{product.type}</p>
+              </div>
+
+              <div>
+                <label>Ngày sản xuất:</label>
+                <input
+                  type="date"
+                  name="manufacturingDate"
+                  ref={manufacturingDateRef}
+                  required
+                />
+              </div>
+              <div>
+                <label>Hạn sử dụng:</label>
+                <input
+                  type="date"
+                  name="expiryDate"
+                  ref={expiryDateRef}
+                  required
+                />
+              </div>
+            </div>
+          ))}
+          {/* <div>
+            <label>ID sản phẩm:</label>
+            <select name="name" ref={IDRef} required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div> */}
+          {/* <div>
+            <label>Số lượng:</label>
+            <input type="number" name="quantity" ref={quantityRef} required />
+          </div> */}
+          {/* <div>
+            <label>Loại:</label>
+            <select name="type" ref={typeRef} required>
+              <option value="Thuốc">Thuốc</option>
+              <option value="Thực phẩm chức năng">Thực phẩm chức năng</option>
+              <option value="Equipment">Equipment</option>
+            </select>
+          </div> */}
+          {/* <div>
+            <label>Ngày sản xuất:</label>
+            <input
+              type="date"
+              name="manufacturingDate"
+              ref={manufacturingDateRef}
+              required
+            />
+          </div> */}
+          {/* <div>
+            <label>Hạn sử dụng:</label>
+            <input type="date" name="expiryDate" ref={expiryDateRef} required />
+          </div> */}
         </div>
         {message && (
           <div className="form-message">

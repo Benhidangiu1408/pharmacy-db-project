@@ -9,52 +9,55 @@ export interface product {
   type:string;
 
 }
-export interface orderStore {
-  orders: product[];
-  addorder: (product: product) => void;
-  getAllorders: () => product[];
-  logoutOrders:()=> void
+export interface batchStore {
+  batches: product[];
+  addBatch: (product: product) => void;
+  getAllBatches: () => product[];
+  logoutBatches:()=> void
 }
-const useorderStore = create<orderStore>()(
+const useBatchStore = create<batchStore>()(
   persist(
     (set, get) => ({
-      orders: [],
+      batches: [],
 
     //   addorder: (product) =>
     //     set((state) => ({
     //       orders: [...state.orders, product],
     //     })),
-        addorder: (product) =>
+        addBatch: (product) =>
             set((state) => {
-              const existingProductIndex = state.orders.findIndex((p) => p.id === product.id);
+              const existingProductIndex = state.batches.findIndex((p) => p.id === product.id);
           
-              if (existingProductIndex !== -1) {
-                // Product exists, update quantity
-                const updatedOrders = [...state.orders];
-                updatedOrders[existingProductIndex].quantity = product.quantity;
+            //   if (existingProductIndex !== -1) {
+            //     // Product exists, update quantity
+            //     const updatedOrders = [...state.batches];
+            //     updatedOrders[existingProductIndex].quantity = product.quantity;
           
-                // If quantity becomes 0, remove the product
-                if (updatedOrders[existingProductIndex].quantity <= 0) {
-                  updatedOrders.splice(existingProductIndex, 1);
-                }
+            //     // If quantity becomes 0, remove the product
+            //     if (updatedOrders[existingProductIndex].quantity <= 0) {
+            //       updatedOrders.splice(existingProductIndex, 1);
+            //     }
           
-                return { orders: updatedOrders };
-              } else {
-                // Product does not exist, add it if quantity > 0
-                return product.quantity > 0
-                  ? { orders: [...state.orders, product] }
-                  : { orders: state.orders };
-              }
+            //     return { batches: updatedOrders };
+            //   } else {
+            //     // Product does not exist, add it if quantity > 0
+            //     return product.quantity > 0
+            //       ? { orders: [...state.batches, product] }
+            //       : { orders: state.batches };
+            //   }
+              return product.quantity > 0
+                  ? { batches: [...state.batches, product] }
+                  : { batches: state.batches };
             }),
           
-      getAllorders: () => get().orders,
-      logoutOrders: () =>
-        set(() => ({
-          orders: []
-        })),
+        getAllBatches: () => get().batches,
+        logoutBatches: () =>
+                set(() => ({
+                    batches: []
+                })),
     }),
-    { name: "order-store" }
+    { name: "batch-store" }
   )
 );
 
-export default useorderStore;
+export default useBatchStore;

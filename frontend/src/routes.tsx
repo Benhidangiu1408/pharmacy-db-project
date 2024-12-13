@@ -19,6 +19,7 @@ import GrpcData from "./pages/test";
 import ProductView from "./pages/view/ProductView";
 import ShowAccount from "./pages/admin/ShowAccount";
 import HomePageAfterSignin from "./pages/HomePageAfterSignin";
+import AccountDetail from "./pages/admin/AccountDetail";
 
 const routes = createBrowserRouter([
   { path: "/", element: <HomePage /> },
@@ -46,6 +47,7 @@ const routes = createBrowserRouter([
 
 
           { path: "OrderDetail", element: <OrderDetail /> },
+          { path: "AccountDetail", element: <AccountDetail /> },
           { path: "BatchDetail", element: <BatchDetail /> },
           { path: "ProductDetail", element: <ProductDetail /> },
 

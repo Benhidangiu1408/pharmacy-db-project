@@ -15,6 +15,7 @@ service DatabaseService {
     rpc ShowShipperInfo (NoParams) returns (ShipperListResponse);
     rpc GetCustomerDetails (NoParams) returns (CustomerListResponse);
     rpc Signin (SigninRequest) returns (SigninResponse);
+    rpc ShowVoucherInfo (NoParams) returns (VoucherListResponse);
 }
 message SigninRequest{
     string account = 1;
@@ -178,6 +179,16 @@ message ShipperInfo {
 
 message ShipperListResponse {
     repeated ShipperInfo shippers = 1;
+}
+
+message VoucherInfo {
+    int32 id = 1;
+    string name = 2;
+    double price=3;
+}
+
+message VoucherListResponse {
+    repeated VoucherInfo vouchers = 1;
 }
 
 message CustomerDetails {

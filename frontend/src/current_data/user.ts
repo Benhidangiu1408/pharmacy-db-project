@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 export interface user{
     id:number;
     jobType:string;    
+    name:"";
 }
 export interface userStore{
     info:user;
@@ -18,7 +19,8 @@ const useUserStore = create<userStore>()(persist(
     // Initial state
     info: {
         id:0,
-        jobType:"" 
+        jobType:"" ,
+        name:""
     },
   
     // Login: Set the user info
@@ -32,7 +34,8 @@ const useUserStore = create<userStore>()(persist(
       set(() => ({
         info: {
             id:0,
-            jobType:"" 
+            jobType:"" ,
+            name:""
         }
       })),
     // GetInfo: Return the current user info
@@ -41,7 +44,9 @@ const useUserStore = create<userStore>()(persist(
     setJobType: (newJobType: string) =>
         set((state) => ({
           info: {
-            id: state.info.id, // Keep the id unchanged
+            id: state.info.id,
+            name:state.info.name,
+             // Keep the id unchanged
             jobType: newJobType, // Replace the old jobType with the new one
           },
         })),

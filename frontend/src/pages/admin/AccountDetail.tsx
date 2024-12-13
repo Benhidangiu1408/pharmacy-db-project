@@ -1,10 +1,13 @@
 import React, { useRef, useState } from "react";
 import "./form.css";
-import { useLocation } from "react-router-dom";
+// import "../components/view/form.css";
+// import ".../components/view/form.css"
 
-const EmployeeForm = () => {
-  // Tạo các ref cho các input
-  const nameRef = useRef<HTMLInputElement>(null);
+import { useLocation } from 'react-router-dom';
+
+const AccountDetail = () => {
+    
+    const nameRef = useRef<HTMLInputElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);
   const accountRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -16,6 +19,9 @@ const EmployeeForm = () => {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("success"); // success hoặc error
 
+  
+  const location = useLocation();
+  const product = location.state?.product;
   // Hàm để gửi dữ liệu đến backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,23 +78,27 @@ const EmployeeForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <label>Họ và tên:</label>
-          <input type="text" name="name" ref={nameRef} required />
+          <p>{product.name}</p>
         </div>
         <div>
           <label>Địa chỉ:</label>
-          <input type="text" name="address" ref={addressRef} required />
+          <p>{product.address}</p>
+
         </div>
         <div>
           <label>Tài khoản:</label>
-          <input type="text" name="account" ref={accountRef} required />
+          <p>{product.account}</p>
+
         </div>
         <div>
           <label>Mật khẩu:</label>
-          <input type="password" name="password" ref={passwordRef} required />
+          <p>{product.password}</p>
+
         </div>
         <div>
           <label>Số điện thoại:</label>
-          <input type="text" name="phoneNo" ref={phoneNoRef} required />
+          <p>{product.phone_no}</p>
+
         </div>
         <div>
           <label>Loại công việc:</label>
@@ -99,15 +109,18 @@ const EmployeeForm = () => {
         </div>
         <div>
           <label>Vị trí công việc:</label>
-          <select name="jobType" ref={jobTypeRef} required>
+          {/* <select name="jobType" ref={jobTypeRef} required>
             <option value="Dược sĩ">Dược sĩ</option>
             <option value="Quản kho">Quản kho</option>
             <option value="Quản hàng">Quản hàng</option>
-          </select>
+          </select> */}
+          <p>{product.job_type}</p>
+
         </div>
         <div>
           <label>Chứng chỉ:</label>
-          <input type="text" name="credential" ref={credentialRef} />
+          <p>{product.credential}</p>
+
         </div>
 
         {/* Thông báo */}
@@ -122,7 +135,7 @@ const EmployeeForm = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default EmployeeForm;
+export default AccountDetail

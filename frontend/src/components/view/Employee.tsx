@@ -7,6 +7,7 @@ import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
 import { Navigate, Outlet } from "react-router-dom";
 import { useEmployees } from "../../hooks/useEmployees";
+import { Employee } from "../../entities/Employee";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -48,8 +49,8 @@ const EmployeeView: React.FC = () => {
     }
   };
 
-  const handleEditProduct = (product: Product) => {
-    navigate("/homepage/productdetail", { state: { product: product } });
+  const handleEditProduct = (product: Employee) => {
+    navigate("/homepage/AccountDetail", { state: { product: product } });
   };
 
   const handleDeleteProduct = (productId: number) => {

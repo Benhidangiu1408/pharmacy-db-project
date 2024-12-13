@@ -348,6 +348,21 @@ const showShipperInfo = async (call, callback) => {
   }
 };
 
+const showVoucherInfo = async (call, callback) => {
+  try {
+      const [rows] = await db.query(`CALL order_cus_voucher.ShowVoucherInfo()`);
+      const vouchers = rows[0].map(voucher => ({
+        id : voucher.ID,
+        name : voucher.Name,
+        price:voucher.Amount
+      }));
+      callback(null, { vouchers } );
+  } catch (error) {
+      console.error('Database error:', error);
+      callback({ code: 13, details: 'Database error while fetching shipper info' });
+  }
+};
+
 // Get customer details
 const getCustomerDetails = async (call, callback) => {
   try {
@@ -406,5 +421,5 @@ module.exports = { fetchUsers,insertEmployee,
   getEmployeeOrders,
   showOrderStatus,
   showShipperInfo,
-  getCustomerDetails, fetchProductList,signin};
+  getCustomerDetails, fetchProductList,signin,showVoucherInfo};
 

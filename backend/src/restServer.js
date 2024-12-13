@@ -192,6 +192,16 @@ app.get('/api/v1/showShipperInfo', (req, res) => {
     });
 });
 
+app.get('/api/v1/showVoucherInfo', (req, res) => {
+    client.ShowVoucherInfo({}, (err, response) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(response);
+        }
+    });
+});
+
 app.get('/api/v1/getCustomerDetails', (req, res) => {
     client.GetCustomerDetails({}, (err, response) => {
         if (err) {
