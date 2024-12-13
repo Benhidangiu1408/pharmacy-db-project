@@ -175,6 +175,7 @@ message CustomerDetails {
 
 message CustomerListResponse {
     repeated CustomerDetails customers = 1;
+}
 
 message Product {
   int32 id = 1;

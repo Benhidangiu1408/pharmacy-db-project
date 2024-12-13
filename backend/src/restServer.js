@@ -57,6 +57,10 @@ app.post('/api/v1/insertEmployee', (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+    res.json({"Msg":"Sever is running bro"})
+});
+
 app.post('/api/v1/updateEmployeePassword', (req, res) => {
     const { id, new_password } = req.body;
     client.UpdateEmployeePassword({ id, new_password }, (err, response) => {
