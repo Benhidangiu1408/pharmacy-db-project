@@ -3,6 +3,17 @@ syntax = "proto3";
 service DatabaseService {
   
     rpc GetUser (UserRequest) returns (UserResponse);
+    rpc InsertEmployee (InsertEmployeeRequest) returns (Employee1Response);
+    rpc UpdateEmployeePassword (UpdatePasswordRequest) returns (UpdateResponse);
+    rpc UpdateEmployeeJobType (UpdateJobTypeRequest) returns (UpdateResponse);
+    rpc ShowAllEmployees (NoParams) returns (EmployeeListResponse);
+    rpc ShowOneEmployee (EmployeeRequest) returns (EmployeeResponse);
+    rpc InsertOrder (InsertOrderRequest) returns (OrderResponse);
+    rpc GetAllOrders (NoParams) returns (OrderListResponse);
+    rpc GetEmployeeOrders (EmployeeOrderRequest) returns (OrderListResponse2);
+    rpc ShowOrderStatus (NoParams) returns (OrderStatusResponse);
+    rpc ShowShipperInfo (NoParams) returns (ShipperListResponse);
+    rpc GetCustomerDetails (NoParams) returns (CustomerListResponse);
 }
 
 message UserRequest {
@@ -14,4 +25,153 @@ message no{}
 message UserResponse {
   int32 id = 1;
   int32 sdt=2;
+}
+
+message InsertEmployeeRequest {
+    string name = 1;
+    string address = 2;
+    string account = 3;
+    string password = 4;
+    string phone_no = 5;
+    string working_type = 6;
+    string job_type = 7;
+    string credential = 8;
+}
+
+message Employee1Response {
+    int32 id = 1; // Auto-generated ID after insertion
+    string message = 2;
+}
+
+message UpdatePasswordRequest {
+    int32 id = 1;
+    string new_password = 2;
+}
+
+message UpdateJobTypeRequest {
+    int32 id = 1;
+    string new_job_type = 2;
+}
+
+message UpdateResponse {
+    string message = 1;
+}
+
+message NoParams {}
+
+message EmployeeRequest {
+    int32 empID = 1;
+}
+
+message EmployeeResponse {
+    int32 id = 1;
+    string name = 2;
+    string address = 3;
+    string account = 4;
+    string password =5;
+    string phone_no = 6;
+    string working_type = 7;
+    string job_type = 8;
+    string credential = 9;
+}
+
+message EmployeeListResponse {
+    repeated EmployeeResponse employees = 1;
+}
+
+message InsertOrderRequest {
+    string destination = 1;
+    string note = 2;
+    int32 distance = 3;
+    int32 order_status_id = 4;
+    float total = 5;
+    int32 cust_id = 6;
+    string cust_name = 7;
+    string cust_phone_no = 8;
+    string order_date = 9;
+    int32 voucher_id = 10;
+    int32 shipper_id = 11;
+    float shipper_cost = 12;
+    string order_items = 13; // JSON format
+    int32 employee_id = 14;
+}
+
+message OrderResponse {
+    int32 order_id = 1;
+    string destination = 2;
+    string note = 3;
+    int32 distance = 4;
+    int32 order_status_id = 5;
+    float total = 6;
+    int32 cust_id = 7;
+    string cust_name = 8;
+    string cust_phone_no = 9;
+    string order_date = 10;
+    int32 voucher_id = 11;
+    int32 shipper_id = 12;
+    string shipper_name=13;
+    string logistic_company_name=14;
+    float shipping_cost = 15;
+    string product_name = 16; 
+    int32 product_quantity = 17; 
+    string employee_name = 18;
+}
+
+message OrderListResponse {
+    repeated OrderResponse orders = 1;
+}
+
+message OrderResponse2 {
+    int32 order_id = 1;
+    string destination = 2;
+    string note = 3;
+    int32 distance = 4;
+    int32 order_status_id = 5;
+    float total = 6;
+    int32 cust_id = 7;
+    string cust_name = 8;
+    string cust_phone_no = 9;
+    string order_date = 10;
+    int32 voucher_id = 11;
+    int32 shipper_id = 12;
+    string shipper_name=13;
+    string logistic_company_name=14;
+    float shipping_cost = 15;
+    string product_name = 16; 
+    int32 product_quantity = 17; 
+}
+
+message OrderListResponse2 {
+    repeated OrderResponse2 orders = 1;
+}
+
+message EmployeeOrderRequest {
+    int32 empID = 1;
+}
+
+message status{
+  int32 status_id=1;
+  string name=2;
+}
+message OrderStatusResponse {
+    repeated status statuses = 1;
+}
+
+message ShipperInfo {
+    int32 id = 1;
+    string name = 2;
+}
+
+message ShipperListResponse {
+    repeated ShipperInfo shippers = 1;
+}
+
+message CustomerDetails {
+    int32 id = 1;
+    string name = 2;
+    string phone_no = 3;
+}
+
+message CustomerListResponse {
+    repeated CustomerDetails customers = 1;
 }
