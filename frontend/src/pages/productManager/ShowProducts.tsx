@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import Product from "../../components/view/Product";
 
-const ShowProducts = () => {
-  return (
-    <div>ShowProducts</div>
-  )
-}
+const ProductView: React.FC = () => {
+  return <Product />;
+};
 
-export default ShowProducts
+export default ProductView;

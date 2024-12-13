@@ -1,7 +1,8 @@
-import React from 'react'
+import React from "react";
+import BatchForm from "../../components/view/formCreateBatch";
 
-export const CreateBatches = () => {
-  return (
-    <div>CreateBatches</div>
-  )
-}
+const BatchFormView: React.FC = () => {
+  return <BatchForm />;
+};
+
+export default BatchFormView;

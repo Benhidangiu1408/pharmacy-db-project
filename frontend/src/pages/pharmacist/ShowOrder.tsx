@@ -1,9 +1,8 @@
 import React from 'react'
+import Order from "../../components/view/Order";
 
 const ShowOrder = () => {
-  return (
-    <div>ShowOrder</div>
-  )
+  return <Order />;
 }
 
 export default ShowOrder

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 service DatabaseService {
-  
+  rpc GetProductList(no) returns (ProductListResponse);
     rpc GetUser (UserRequest) returns (UserResponse);
     rpc InsertEmployee (InsertEmployeeRequest) returns (Employee1Response);
     rpc UpdateEmployeePassword (UpdatePasswordRequest) returns (UpdateResponse);
@@ -26,6 +26,7 @@ message UserResponse {
   int32 id = 1;
   int32 sdt=2;
 }
+
 
 message InsertEmployeeRequest {
     string name = 1;
@@ -174,4 +175,25 @@ message CustomerDetails {
 
 message CustomerListResponse {
     repeated CustomerDetails customers = 1;
+
+message Product {
+  int32 id = 1;
+  int32 employee_id = 2; // Employee_ID is now included
+  string name = 3;
+  string description = 4;
+  string origin = 5;
+  string tag = 6;
+  string storage_condition = 7;
+  string country_of_origin = 8;
+  double price = 9;
+  string directions_for_use = 10;
+  string certificate = 11;
+  string warning = 12;
+  string intended_user = 13;
+  int32 total_amount_from_batch = 14;
+}
+
+message ProductListResponse {
+  repeated Product products = 1;
+
 }
