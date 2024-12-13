@@ -18,6 +18,7 @@ const fetchUsers = async (call, callback) => {
         id: user.id,
         sdt: user.sdt,
         email: user.email,
+        
       });
     }
   } catch (error) {
@@ -208,7 +209,11 @@ const getEmployeeOrders = async (call, callback) => {
 const showOrderStatus = async (call, callback) => {
   try {
       const [rows] = await db.query(`CALL order_cus_voucher.ShowOrderStatus()`);
-      callback(null, { statuses: rows });
+      const statuses = rows[0].map(status => ({
+        status_id : status.Status_ID,
+        name : status.Status_Name
+      }));
+      callback(null, { statuses });
   } catch (error) {
       console.error('Database error:', error);
       callback({ code: 13, details: 'Database error while fetching order statuses' });
