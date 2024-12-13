@@ -87,7 +87,7 @@ const EmployeeForm = () => {
         </div>
         <div>
           <label>Số điện thoại:</label>
-          <input type="number" name="phoneNo" ref={phoneNoRef} required />
+          <input type="text" name="phoneNo" ref={phoneNoRef} required />
         </div>
         <div>
           <label>Loại công việc:</label>

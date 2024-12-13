@@ -83,7 +83,7 @@ const OrderForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <label>Địa điểm giao hàng:</label>
-          <input type="text" name="destination" ref={destinationRef} required />
+          <input type="text" name="destination" ref={destinationRef}  />
         </div>
         <div>
           <label>Ghi chú:</label>
@@ -91,7 +91,7 @@ const OrderForm = () => {
         </div>
         <div>
           <label>Khoảng cách:</label>
-          <input type="number" name="distance" ref={distanceRef} required />
+          <input type="number" name="distance" ref={distanceRef}  />
         </div>
         <div>
           <label>Tổng tiền:</label>
@@ -119,7 +119,7 @@ const OrderForm = () => {
         </div>
         <div>
           <label>Shipper ID:</label>
-          <select name="shipperId" ref={shipperIdRef} required>
+          <select name="shipperId" ref={shipperIdRef} >
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -131,12 +131,12 @@ const OrderForm = () => {
             type="number"
             name="shipperCost"
             ref={shipperCostRef}
-            required
+            
           />
         </div>
         <div>
           <label>Chi tiết đơn hàng:</label>
-          <input type="text" name="orderItems" ref={orderItemsRef} required />
+          <input type="text" name="orderItems" ref={orderItemsRef}  />
         </div>
         <div>
           <label>Mã nhân viên:</label>
