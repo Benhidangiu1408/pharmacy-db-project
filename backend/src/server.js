@@ -10,7 +10,11 @@ const { fetchUsers,insertEmployee,
   getEmployeeOrders,
   showOrderStatus,
   showShipperInfo,
-  getCustomerDetails,fetchProductList } = require('./services');
+  getCustomerDetails,fetchProductList,
+  insertBatchData,
+  getBatchDetails,
+  signin
+ } = require('./services');
 
 
 const PROTO_PATH = './protos/service.proto';
@@ -34,7 +38,11 @@ server.addService(databaseService.service, { GetUser: fetchUsers,InsertEmployee:
   GetEmployeeOrders: getEmployeeOrders,
   ShowOrderStatus: showOrderStatus,
   ShowShipperInfo: showShipperInfo,
-  GetCustomerDetails: getCustomerDetails, GetProductList: fetchProductList});
+  GetCustomerDetails: getCustomerDetails, GetProductList: fetchProductList,
+  insertBatchData: insertBatchData,
+  GetBatchDetails: getBatchDetails,
+  Signin:signin
+});
 
 
 const PORT = 50051;

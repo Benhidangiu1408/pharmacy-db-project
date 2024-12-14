@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-const express = require("express");
-const grpc = require("@grpc/grpc-js");
-=======
 const express = require('express');
 const grpc = require('@grpc/grpc-js');
 const cors = require('cors');
->>>>>>> origin/fetch-voucher
 // const protoLoader = require('@grpc/proto-loader');
 
 // const PROTO_PATH = './protos/service.proto';
