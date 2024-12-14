@@ -21,14 +21,12 @@ message SigninRequest{
     string account = 1;
     string password = 2;
 }
-enum JobType {
-  PHARMACIST = 0;         
-  INVENTORY_MANAGER = 1;
-  PRODUCT_MANAGER = 2;
-}
+
+
 message SigninResponse{
     int32 id = 1;
-    JobType jobType = 2;   
+    string jobType = 2;  
+    string name = 3; 
 }
 message UserRequest {
   int32 id = 1;

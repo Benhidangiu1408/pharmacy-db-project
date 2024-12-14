@@ -1,5 +1,6 @@
 const express = require('express');
 const grpc = require('@grpc/grpc-js');
+const cors = require('cors');
 // const protoLoader = require('@grpc/proto-loader');
 
 // const PROTO_PATH = './protos/service.proto';
@@ -23,6 +24,7 @@ const client = new protoDescriptor.DatabaseService('localhost:50051', grpc.crede
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const PORT = 8080;
 
 app.get('/api/v1/example/:id', (req, res) => {
