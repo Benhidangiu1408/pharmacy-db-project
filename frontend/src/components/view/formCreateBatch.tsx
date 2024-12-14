@@ -22,7 +22,8 @@ const BatchForm = () => {
   // Hàm để gửi dữ liệu đến backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    logoutBatches();
+    logoutOrders();
     // Lấy giá trị từ các ref
     // const name = nameRef.current?.value || "";
     const quantity = quantityRef.current?.value || "1";

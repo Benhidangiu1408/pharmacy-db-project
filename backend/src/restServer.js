@@ -143,6 +143,8 @@ app.post('/api/v1/insertOrder', (req, res) => {
         shipper_id, shipper_cost, order_items, employee_id
     };
 
+    console.log(request);
+
     client.InsertOrder(request, (err, response) => {
         if (err) {
             res.status(500).send(err);

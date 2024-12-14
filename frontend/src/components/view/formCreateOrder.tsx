@@ -2,11 +2,13 @@ import React, { useRef, useState } from "react";
 import "./form.css";
 import useorderStore from "../../current_data/order";
 import useUserStore from "../../current_data/user";
+import useBatchStore from "../../current_data/batch";
 
 const OrderForm = () => {
   // Tạo các ref cho các input
-  const { getAllorders } = useorderStore(); // Lấy hàm login
+  const { getAllorders, logoutOrders} = useorderStore(); // Lấy hàm login
   const { getInfo } = useUserStore(); // Lấy hàm login
+  const{logoutBatches}=useBatchStore()
 
   const orders = getAllorders();
   const info=getInfo()
@@ -30,7 +32,8 @@ const OrderForm = () => {
   // Hàm để gửi dữ liệu đến backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    logoutBatches();
+    logoutOrders();
     // Lấy giá trị từ các ref
     const destination = destinationRef.current?.value || "";
     const note = noteRef.current?.value || "";
