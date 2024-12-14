@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import Navbar from './_navbar'; // Assuming Navbar.tsx is in the same directory
-
+// import Navbar from './_navbar'; // Assuming Navbar.tsx is in the same directory
+import Navbar from './_navbar';
 interface LayoutProps {
   children: ReactNode; // Type for children elements
 }

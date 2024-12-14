@@ -1,7 +1,13 @@
 import React, { useRef, useState } from "react";
 import "./form.css";
+import useBatchStore from "../../current_data/batch";
+import useorderStore from "../../current_data/order";
 
 const BatchForm = () => {
+  const { getAllBatches,logoutBatches } = useBatchStore(); // Lấy hàm login
+  const{logoutOrders}=useorderStore()
+  const batches = getAllBatches();
+
   // Tạo các ref cho các input
   const IDRef = useRef<HTMLSelectElement>(null);
   // const IDRef=useRef<HTMLSelectElement>(null);
@@ -93,7 +99,7 @@ const BatchForm = () => {
 
   return (
     <div className="content-container">
-      <h1>NHẬP THÔNG TIN SẢN PHẨM</h1>
+      <h1>THÔNG TIN LÔ HÀNG</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>ID sản phẩm:</label>

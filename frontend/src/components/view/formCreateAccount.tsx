@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./form.css";
+import { useLocation } from "react-router-dom";
 
 const EmployeeForm = () => {
   // Tạo các ref cho các input

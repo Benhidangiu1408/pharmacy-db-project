@@ -86,6 +86,37 @@ const insertBatchData = async (call, callback) => {
     callback({
       code: 13, // INTERNAL
       details: "Database error while saving batch data",
+    })
+  }
+}
+// Update employee password
+const signin = async (call, callback) => {
+  const { account, password } = call.request;
+
+  try {
+    // Call the stored procedure with placeholders for OUT parameters
+    const [results] = await db.query(
+      "CALL employee_prescription.Signin(?, ?)",
+      [account, password]
+    );
+
+    const SigninResponse = results[0][0];
+    // Access the OUT parameters from the result set
+    const empID = SigninResponse.ID;
+    const employeeJobType = SigninResponse.JobType;    
+    const eName = SigninResponse.Name;    
+
+    callback(null, {
+      id : empID,
+      jobType : employeeJobType,
+      name : eName
+    });
+  } catch (error) {
+    console.error("Database error:", error);
+    callback({
+      id : -1,
+      jobType : "Nope",
+      name : "Wrong"
     });
   }
 };
@@ -177,7 +208,18 @@ const showAllEmployees = async (call, callback) => {
     const [rows] = await db.query(
       `CALL employee_prescription.ShowAllEmployees()`
     );
-    callback(null, { employees: rows });
+    const employees = rows[0].map((user) => ({
+      id: user.ID,
+      name: user.Name,
+      address: user.Address,
+      account: user.Account,
+      password: user.Password,
+      phone_no: user.Phone_no,
+      working_type: user.WorkingType,
+      job_type: user.JobType,
+      credential: user.Creadential,
+    }));
+    callback(null, { employees });
   } catch (error) {
     console.error("Database error:", error);
     callback({ code: 13, details: "Database error while fetching employees" });
@@ -196,7 +238,18 @@ const showOneEmployee = async (call, callback) => {
     if (rows.length === 0) {
       callback({ code: 5, details: "Employee not found" });
     } else {
-      callback(null, rows[0]);
+      const user = rows[0];
+      callback(null, {
+        id: user.ID,
+        name: user.Name,
+        address: user.Address,
+        account: user.Account,
+        password: user.Password,
+        phone_no: user.Phone_no,
+        working_type: user.WorkingType,
+        job_type: user.JobType,
+        credential: user.Creadential,
+      });
     }
   } catch (error) {
     console.error("Database error:", error);
@@ -254,7 +307,27 @@ const insertOrder = async (call, callback) => {
 const getAllOrders = async (call, callback) => {
   try {
     const [rows] = await db.query(`CALL order_cus_voucher.GetAllOrders()`);
-    callback(null, { orders: rows });
+    const orders = rows[0].map((order) => ({
+      order_id: Order_ID,
+      destination: Destination,
+      note: Note,
+      distance: Distance,
+      order_status_id: OrderStatus_ID,
+      total: Total,
+      cust_id: Cus_ID,
+      cust_name: Customer_Name,
+      cust_phone_no: Customer_Phone,
+      order_date: Order_Date,
+      voucher_id: Voucher_ID,
+      shipper_id: Shipper_ID,
+      shipper_name: Shipper_Name,
+      logistic_company_name: Logistic_Company_Name,
+      shipping_cost: Shipping_Cost,
+      product_name: Product_Name,
+      product_quantity: Quantity,
+      employee_name: Name,
+    }));
+    callback(null, { orders });
   } catch (error) {
     console.error("Database error:", error);
     callback({ code: 13, details: "Database error while fetching orders" });
@@ -270,7 +343,27 @@ const getEmployeeOrders = async (call, callback) => {
       `CALL order_cus_voucher.GetEmployeeOrders(?)`,
       [empID]
     );
-    callback(null, { orders: rows });
+    const orders = rows[0].map((order) => ({
+      order_id: Order_ID,
+      destination: Destination,
+      note: Note,
+      distance: Distance,
+      order_status_id: OrderStatus_ID,
+      total: Total,
+      cust_id: Cus_ID,
+      cust_name: Customer_Name,
+      cust_phone_no: Customer_Phone,
+      order_date: Order_Date,
+      voucher_id: Voucher_ID,
+      shipper_id: Shipper_ID,
+      shipper_name: Shipper_Name,
+      logistic_company_name: Logistic_Company_Name,
+      shipping_cost: Shipping_Cost,
+      product_name: Product_Name,
+      product_quantity: Quantity,
+    }));
+
+    callback(null, { orders });
   } catch (error) {
     console.error("Database error:", error);
     callback({
@@ -285,8 +378,8 @@ const showOrderStatus = async (call, callback) => {
   try {
     const [rows] = await db.query(`CALL order_cus_voucher.ShowOrderStatus()`);
     const statuses = rows[0].map((status) => ({
-      status_id: status.Status_ID,
-      name: status.Status_Name,
+      status_id: status.ID,
+      name: status.Name,
     }));
     callback(null, { statuses });
   } catch (error) {
@@ -316,13 +409,36 @@ const showShipperInfo = async (call, callback) => {
   }
 };
 
+const showVoucherInfo = async (call, callback) => {
+  try {
+      const [rows] = await db.query(`CALL order_cus_voucher.ShowVoucherInfo()`);
+      const vouchers = rows[0].map(voucher => ({
+        id : voucher.ID,
+        name : voucher.Name,
+        price:voucher.Amount
+      }));
+      callback(null, { vouchers } );
+  } catch (error) {
+    console.error("Database error:", error);
+    callback({
+      code: 13,
+      details: "Database error while fetching shipper info",
+    });
+  }
+};
+
 // Get customer details
 const getCustomerDetails = async (call, callback) => {
   try {
     const [rows] = await db.query(
       `CALL order_cus_voucher.GetCustomerDetails()`
     );
-    callback(null, { customers: rows });
+    const customers = rows[0].map((customer) => ({
+      id: customer.ID,
+      name: customer.Name,
+      phone_no: customer.Phone_no,
+    }));
+    callback(null, { customers });
   } catch (error) {
     console.error("Database error:", error);
     callback({
@@ -405,4 +521,6 @@ module.exports = {
   fetchProductList,
   insertBatchData,
   getBatchDetails,
+  signin,
+  showVoucherInfo
 };

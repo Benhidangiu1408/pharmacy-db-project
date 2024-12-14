@@ -1,0 +1,122 @@
+h1 {
+  text-align: center; /* Center the text horizontally */
+  margin-bottom: 20px; /* Add space between the header and the form */
+}
+
+form {
+  display: flex;
+  flex-direction: column; /* Stack inputs vertically */
+  justify-content: 100px; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  width: 1000px; /* Optional: set width for form */
+  margin: 0 auto; /* Center horizontally within the page */
+  height: 130vh; /* Full height for vertical centering */
+}
+
+div {
+  margin-bottom: 15px;
+  /* display: flex; */
+  justify-content: space-between; /* Add space between label and input */
+  align-items: center; /* Align items vertically in the center */
+  margin-bottom: 15px;
+}
+
+input,p,
+select {
+  background-color: #f0f8ff; /* Màu nền */
+  border: 1px solid #ccc; /* Viền ô nhập */
+  padding: 10px;
+  width: 1000px;
+  font-size: 14px;
+  border-radius: 4px; /* Bo tròn viền */
+}
+
+input:focus {
+  background-color: #e6f7ff; /* Màu nền khi focus */
+  border: 1px solid #007bff; /* Viền khi focus */
+  outline: none; /* Bỏ viền mặc định */
+}
+
+label {
+  flex: 1; /* Label takes up some space */
+  text-align: right; /* Right-align the text */
+  margin-right: 10px; /* Add spacing between label and input */
+}
+
+create-form
+.form_button {
+  background-color:#e6f7ff;
+  /* color: white; */
+  padding: 10px 20px;
+  border-radius: 10px;
+ 
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+.form_button:hover {
+  background-color:green;
+}
+
+p {
+  margin-top: 20px;
+  color: rgb(0, 58, 128);
+  font-weight: bold;
+}
+
+/* Style the calendar button */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #4582a0; /* Set the background color */
+  color: black; /* Change the icon color */
+  border-radius: 4px; /* Optional: round the button */
+  padding: 5px; /* Adjust spacing */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  background-color: gray; /* Change color on hover */
+}
+
+.content-container {
+  margin-top: 10px; /* Adjust to create enough space */
+  /* overflow: hidden; */
+}
+
+.error-message {
+  color: red; /* Màu chữ đỏ */
+  font-weight: bold; /* Chữ đậm */
+  background-color: #fff3f3; /* Màu nền nhẹ */
+  padding: 10px; /* Khoảng cách từ viền */
+  border: 1px solid red; /* Đường viền đỏ */
+  border-radius: 5px; /* Bo tròn các góc */
+  margin-top: 10px; /* Khoảng cách trên */
+  position: absolute; /* Vị trí tuyệt đối */
+  top: 20px; /* Khoảng cách từ trên cùng */
+  left: 50%; /* Canh giữa */
+  transform: translateX(-50%); /* Căn giữa chính xác */
+  z-index: 1000; /* Đảm bảo thông báo luôn ở trên */
+}
+
+.form-message {
+  margin-bottom: 20px; /* Tạo khoảng cách giữa thông báo và nút */
+  color: black; /* Màu xanh lá cho thông báo thành công */
+  font-weight: bold;
+  text-align: center; /* Canh giữa thông báo */
+}
+
+.form-message p {
+  color: red; /* Màu đỏ nếu là thông báo lỗi */
+  font-size: 14px;
+}
+
+.form-message.success {
+  color: green;
+}
+
+.form-message.error {
+  color: red;
+}
+
+/* .page {
+  size: auto;
+} */

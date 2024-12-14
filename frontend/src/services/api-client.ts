@@ -1,4 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse  } from "axios";
+import { SigninRequest, SigninResponse } from "../entities/Employee"; // Import your request/response types
 
 class APIClient<T> {
   endpoint: string;
@@ -6,6 +7,24 @@ class APIClient<T> {
   constructor(endpoint: string) {
     this.endpoint = endpoint;
   }
+
+  postSignin = (data: SigninRequest, config?: AxiosRequestConfig): Promise<SigninResponse> => {
+    console.log(this.endpoint)
+    return axios
+      .post<SigninResponse>(this.endpoint, data, config) // Specify SigninResponse as the response type
+      .then((res: AxiosResponse<SigninResponse>) => {
+        // Validate the response data
+        console.log(res)
+        if (!res.data || typeof res.data.id !== 'number' || typeof res.data.name !== 'string') {
+          throw new Error("Invalid sign-in response format");
+        }
+        return res.data;
+      })
+      .catch((error) => {
+        console.error("Error during sign-in:", error);
+        throw error; // Re-throw the error to be handled by useMutation
+      });
+  };
 
   getAll = (id?: string | number,config?: AxiosRequestConfig) => {
     const url= id? `${this.endpoint}/${id}`: this.endpoint

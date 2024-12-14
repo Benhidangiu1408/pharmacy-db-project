@@ -1,25 +1,19 @@
-const grpc = require("@grpc/grpc-js");
-const protoLoader = require("@grpc/proto-loader");
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
 
-const {
-  fetchUsers,
-  insertEmployee,
+const { fetchUsers,insertEmployee,
   updateEmployeePassword,
-  updateEmployeeJobType,
-  showAllEmployees,
+  updateEmployeeJobType, showAllEmployees,
   showOneEmployee,
   insertOrder,
   getAllOrders,
   getEmployeeOrders,
   showOrderStatus,
   showShipperInfo,
-  getCustomerDetails,
-  fetchProductList,
-  insertBatchData,
-  getBatchDetails,
-} = require("./services");
+  getCustomerDetails,fetchProductList } = require('./services');
 
-const PROTO_PATH = "./protos/service.proto";
+
+const PROTO_PATH = './protos/service.proto';
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -31,34 +25,24 @@ const databaseService = protoDescriptor.DatabaseService;
 
 const server = new grpc.Server();
 
-server.addService(databaseService.service, {
-  GetUser: fetchUsers,
-  InsertEmployee: insertEmployee,
-  insertBatchData: insertBatchData,
+server.addService(databaseService.service, { GetUser: fetchUsers,InsertEmployee: insertEmployee,
   UpdateEmployeePassword: updateEmployeePassword,
-  UpdateEmployeeJobType: updateEmployeeJobType,
-  ShowAllEmployees: showAllEmployees,
+  UpdateEmployeeJobType: updateEmployeeJobType,ShowAllEmployees: showAllEmployees,
   ShowOneEmployee: showOneEmployee,
   InsertOrder: insertOrder,
   GetAllOrders: getAllOrders,
   GetEmployeeOrders: getEmployeeOrders,
   ShowOrderStatus: showOrderStatus,
   ShowShipperInfo: showShipperInfo,
-  GetCustomerDetails: getCustomerDetails,
-  GetProductList: fetchProductList,
-  GetBatchDetails: getBatchDetails,
-});
+  GetCustomerDetails: getCustomerDetails, GetProductList: fetchProductList});
+
 
 const PORT = 50051;
-server.bindAsync(
-  `0.0.0.0:${PORT}`,
-  grpc.ServerCredentials.createInsecure(),
-  (err, port) => {
-    if (err) throw err;
-    console.log(`gRPC server running on port ${port}`);
-    server;
-  }
-);
+server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
+  if (err) throw err;
+  console.log(`gRPC server running on port ${port}`);
+  server;
+});
 
 // const grpc = require('@grpc/grpc-js');
 // const { Server } = require('grpc-web-node-server');
@@ -87,3 +71,8 @@ server.bindAsync(
 
 // grpcWebServer.start();
 // console.log('gRPC-Web server running on http://localhost:8080');
+
+
+
+
+

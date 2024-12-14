@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 const express = require("express");
 const grpc = require("@grpc/grpc-js");
+=======
+const express = require('express');
+const grpc = require('@grpc/grpc-js');
+const cors = require('cors');
+>>>>>>> origin/fetch-voucher
 // const protoLoader = require('@grpc/proto-loader');
 
 // const PROTO_PATH = './protos/service.proto';
@@ -25,6 +31,7 @@ const client = new protoDescriptor.DatabaseService(
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const PORT = 8080;
 
 app.get("/api/v1/example/:id", (req, res) => {
@@ -67,6 +74,33 @@ app.post("/api/v1/insertEmployee", (req, res) => {
     } else {
       res.json(response);
     }
+  });
+});
+
+app.post("/signin", (req, res) => {
+  const { account, password } = req.body;
+
+  // Validate input
+  if (!account || !password) {
+    return res.status(400).json({ error: "Account and password are required." });
+  }
+
+  // Call the gRPC signin function
+  client.Signin({ account, password }, (err, response) => {
+    if (err) {
+      console.error("gRPC error:", err);
+      // Handle gRPC errors and map them to HTTP status codes
+      const statusMap = {
+        5: 404, // NOT_FOUND
+        13: 500, // INTERNAL
+      };
+      return res
+        .status(statusMap[err.code] || 500)
+        .json({ error: err.details || "Internal server error" });
+    }
+
+    // Respond with the signin data
+    res.json(response);
   });
 });
 
@@ -204,6 +238,17 @@ app.get("/api/v1/showShipperInfo", (req, res) => {
     }
   });
 });
+app.get('/api/v1/showVoucherInfo', (req, res) => {
+    client.ShowVoucherInfo({}, (err, response) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(response);
+        }
+    });
+});
+
+
 
 app.get("/api/v1/getCustomerDetails", (req, res) => {
   client.GetCustomerDetails({}, (err, response) => {

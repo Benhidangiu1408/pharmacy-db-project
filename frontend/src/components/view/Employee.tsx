@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import JsonTable from "./jsonTable"; // Import the table component
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
 import { Navigate, Outlet } from "react-router-dom";
+import { useEmployees } from "../../hooks/useEmployees";
+import { Employee } from "../../entities/Employee";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -31,8 +33,9 @@ const formVariants = {
 
 // --- Main Component ---
 const EmployeeView: React.FC = () => {
-  const { isLoading, isError, data, error } = useProducts();
-  const products = data? data.products : [];
+  //   const { isLoading, isError, data, error } = useProducts();
+  const { data, isLoading, error } = useEmployees();
+  const products = data? data.employees : [];
   const nameRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
@@ -46,13 +49,19 @@ const EmployeeView: React.FC = () => {
     }
   };
 
-  const handleEditProduct = (product: Product) => {navigate('/homepage/productdetail', { state: { product: product } });};
+  const handleEditProduct = (product: Employee) => {
+    navigate("/homepage/AccountDetail", { state: { product: product } });
+  };
 
-  const handleDeleteProduct = (productId: number) => {navigate('/delete/product', { state: { int: productId } });};
+  const handleDeleteProduct = (productId: number) => {
+    navigate("/delete/product", { state: { int: productId } });
+  };
 
-  const handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
+  const handleToggleRestock = (productId: number) => {
+    navigate("/restock/product", { state: { int: productId } });
+  };
 
-  const addProduct =() => navigate("/homepage/CreateAccount");
+  const addProduct = () => navigate("/homepage/CreateAccount");
 
   return (
     <motion.div

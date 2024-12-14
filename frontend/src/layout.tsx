@@ -5,12 +5,14 @@ import Menu from "./pages/Menu";
 const Layout = () => {
   return (
     <div className="w-full">
-      <Menu/>
+      <div>
+        <Menu />
+      </div>
       <div id="main">
         <Outlet />
         {/* children show ơ cho outlet */}
       </div>
-    </div> 
+    </div>
   );
 };
 

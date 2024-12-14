@@ -14,10 +14,30 @@ service DatabaseService {
     rpc ShowOrderStatus (NoParams) returns (OrderStatusResponse);
     rpc ShowShipperInfo (NoParams) returns (ShipperListResponse);
     rpc GetCustomerDetails (NoParams) returns (CustomerListResponse);
+<<<<<<< HEAD
     rpc insertBatchData (insertBatchDataRequest) returns (insertBatchDataResponse);
     rpc GetBatchDetails(NoParams) returns (BatchResponse);
+=======
+    rpc Signin (SigninRequest) returns (SigninResponse);
+    rpc ShowVoucherInfo (NoParams) returns (VoucherListResponse);
+}
+message SigninRequest{
+    string account = 1;
+    string password = 2;
+>>>>>>> origin/fetch-voucher
 }
 
+message Error {
+    int32 code = 1;       // gRPC status code (e.g., 0 for OK, 1 for CANCELLED, 2 for UNKNOWN, etc.)
+    string message = 2;   // Human-readable error message
+    string details = 3;  // Optional: More detailed error information (e.g., stack trace)
+  }
+
+message SigninResponse{
+    int32 id = 1;
+    string jobType = 2;  
+    string name = 3; 
+}
 message UserRequest {
   int32 id = 1;
 }
@@ -169,6 +189,16 @@ message ShipperListResponse {
     repeated ShipperInfo shippers = 1;
 }
 
+message VoucherInfo {
+    int32 id = 1;
+    string name = 2;
+    double price=3;
+}
+
+message VoucherListResponse {
+    repeated VoucherInfo vouchers = 1;
+}
+
 message CustomerDetails {
     int32 id = 1;
     string name = 2;
@@ -178,6 +208,8 @@ message CustomerDetails {
 message CustomerListResponse {
     repeated CustomerDetails customers = 1;
 }
+
+
 
 message Product {
   int32 id = 1;

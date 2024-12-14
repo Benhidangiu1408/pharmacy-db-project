@@ -1,8 +1,16 @@
 import React, { useRef, useState } from "react";
 import "./form.css";
+import useorderStore from "../../current_data/order";
+import useUserStore from "../../current_data/user";
 
 const OrderForm = () => {
   // Tạo các ref cho các input
+  const { getAllorders } = useorderStore(); // Lấy hàm login
+  const { getInfo } = useUserStore(); // Lấy hàm login
+
+  const orders = getAllorders();
+  const info=getInfo()
+
   const destinationRef = useRef<HTMLInputElement>(null);
   const noteRef = useRef<HTMLInputElement>(null);
   const distanceRef = useRef<HTMLInputElement>(null);
@@ -139,12 +147,32 @@ const OrderForm = () => {
           <input type="text" name="orderItems" ref={orderItemsRef}  />
         </div>
         <div>
-          <label>Mã nhân viên:</label>
-          <select name="employeeId" ref={employeeIdRef} required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
+          {orders.map((product, index) => (
+            <div key={index} className="mb-4">
+              <div>
+                <label>Tên sản phẩm:</label>
+                <p>{product.name} </p>
+              </div>
+
+              <div>
+                <label>Số lượng:</label>
+                <p>{product.quantity}</p>
+              </div>
+              <div>
+                <label>Giá:</label>
+                <p>{product.price}</p>
+              </div>
+
+             
+
+              
+            </div>
+          ))}
+          
+        </div>
+        <div>
+          <label>Nhân viên:</label>
+          <p>{info.name}</p>
         </div>
 
         {/* Thông báo */}

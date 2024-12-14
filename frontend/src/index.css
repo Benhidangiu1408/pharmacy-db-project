@@ -29,9 +29,14 @@ a:hover {
 
 body {
   margin: 0;
+<<<<<<< HEAD
   /* display: flex;
   place-items: center; */
   /* min-width: 320px;
+=======
+  
+  min-width: 320px;
+>>>>>>> origin/fetch-voucher
   min-height: 100vh;
 }
 
@@ -99,7 +104,9 @@ button:focus-visible {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-  } */
+  } 
+}
+
   /* .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;

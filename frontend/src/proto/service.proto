@@ -14,8 +14,20 @@ service DatabaseService {
     rpc ShowOrderStatus (NoParams) returns (OrderStatusResponse);
     rpc ShowShipperInfo (NoParams) returns (ShipperListResponse);
     rpc GetCustomerDetails (NoParams) returns (CustomerListResponse);
+    rpc Signin (SigninRequest) returns (SigninResponse);
+    rpc ShowVoucherInfo (NoParams) returns (VoucherListResponse);
+
+}
+message SigninRequest{
+    string account = 1;
+    string password = 2;
 }
 
+message SigninResponse{
+    int32 id = 1;
+    string jobType = 2;   
+    string name = 3; 
+}
 message UserRequest {
   int32 id = 1;
 }
@@ -176,6 +188,19 @@ message CustomerDetails {
 message CustomerListResponse {
     repeated CustomerDetails customers = 1;
 }
+<<<<<<< HEAD
+=======
+
+message VoucherInfo {
+    int32 id = 1;
+    string name = 2;
+    double price=3;
+}
+
+message VoucherListResponse {
+    repeated VoucherInfo vouchers = 1;
+}
+>>>>>>> origin/fetch-voucher
 
 message Product {
   int32 id = 1;

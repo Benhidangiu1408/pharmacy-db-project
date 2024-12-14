@@ -30,3 +30,16 @@ export interface UpdateEmployeeJobType{
     id:number;
     new_job_type:string
 }
+  
+  // Interface for SigninRequest
+export interface SigninRequest {
+    account: string;
+    password: string;
+}
+  
+  // Interface for SigninResponse
+export interface SigninResponse {
+    id: number;
+    jobType: string;
+    name: string;
+}
