@@ -7,6 +7,7 @@ import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAdminOrder, useEmployeeOrder } from "../../hooks/useOrders";
+import useUserStore from "../../current_data/user";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -32,7 +33,8 @@ const formVariants = {
 
 // --- Main Component ---
 const OrderEmployeeView: React.FC = () => {
-  const { isLoading, isError, data, error } = useEmployeeOrder();
+  const {info}=useUserStore()
+  const { isLoading, isError, data, error } = useEmployeeOrder(info.id);
   const products = data? data.orders : [];
   const nameRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLInputElement>(null);

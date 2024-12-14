@@ -18,13 +18,15 @@ service DatabaseService {
     rpc GetBatchDetails(NoParams) returns (BatchResponse);
     rpc Signin (SigninRequest) returns (SigninResponse);
     rpc ShowVoucherInfo (NoParams) returns (VoucherListResponse);
+    rpc AddProduct (Product) returns (PostStat);
 }
+
 message SigninRequest{
     string account = 1;
     string password = 2;
 }
 
-message Error {
+message PostStat {
     int32 code = 1;       // gRPC status code (e.g., 0 for OK, 1 for CANCELLED, 2 for UNKNOWN, etc.)
     string message = 2;   // Human-readable error message
     string details = 3;  // Optional: More detailed error information (e.g., stack trace)
@@ -209,21 +211,54 @@ message CustomerListResponse {
 
 
 message Product {
-  int32 id = 1;
-  int32 employee_id = 2; // Employee_ID is now included
-  string name = 3;
-  string description = 4;
-  string origin = 5;
-  string tag = 6;
-  string storage_condition = 7;
-  string country_of_origin = 8;
-  double price = 9;
-  string directions_for_use = 10;
-  string certificate = 11;
-  string warning = 12;
-  string intended_user = 13;
-  int32 total_amount_from_batch = 14;
-}
+    int32 id = 1;
+    int32 employee_id = 2;
+    string name = 3;
+    string description = 4;
+    string origin = 5;
+    string tag = 6;
+    string storage_condition = 7;
+    string country_of_origin = 8;
+    double price = 9;
+    string directions_for_use = 10;
+    string certificate = 11;
+    string warning = 12;
+    string intended_user = 13;
+    int32 total_amount_from_batch = 14;
+  
+    // Product type discriminator
+    enum ProductType {
+      PRODUCT = 0; // Default or unknown type
+      CONSUMABLE = 1;
+      MEDICINE = 2;
+      SUPPLEMENT = 3;
+      MEDICAL_EQUIPMENT = 4;
+    }
+    ProductType product_type = 15;
+  
+    // Fields for Consumable attributes
+    string consumable_ingredient = 16;
+    string consumable_serving_size = 17;
+    string consumable_dosage = 18;
+    string consumable_dosage_form = 19;
+    string consumable_constraindication = 20;
+  
+    // Fields for Medicine attributes
+    string medicine_side_effect = 21;
+    string medicine_indication = 22;
+    bool medicine_is_prescription_medicine = 23;
+  
+    // Fields for Supplement attributes
+    string supplement_allergen_info = 24;
+  
+    // Fields for Medical Equipment attributes
+    string medical_equipment_usage_instruction = 25;
+    string medical_equipment_material = 26;
+    int32 medical_equipment_size_dimension = 27;
+    string medical_equipment_requirement = 28;
+    string medical_equipment_warranty = 29;
+    bool medical_equipment_sterility = 30;
+  }
 
 message ProductListResponse {
   repeated Product products = 1;

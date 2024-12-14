@@ -103,20 +103,20 @@ const signin = async (call, callback) => {
     const SigninResponse = results[0][0];
     // Access the OUT parameters from the result set
     const empID = SigninResponse.ID;
-    const employeeJobType = SigninResponse.JobType;    
-    const eName = SigninResponse.Name;    
+    const employeeJobType = SigninResponse.JobType;
+    const eName = SigninResponse.Name;
 
     callback(null, {
-      id : empID,
-      jobType : employeeJobType,
-      name : eName
+      id: empID,
+      jobType: employeeJobType,
+      name: eName,
     });
   } catch (error) {
     console.error("Database error:", error);
     callback({
-      id : -1,
-      jobType : "Nope",
-      name : "Wrong"
+      id: -1,
+      jobType: "Nope",
+      name: "Wrong",
     });
   }
 };
@@ -308,25 +308,26 @@ const getAllOrders = async (call, callback) => {
   try {
     const [rows] = await db.query(`CALL order_cus_voucher.GetAllOrders()`);
     const orders = rows[0].map((order) => ({
-      order_id: Order_ID,
-      destination: Destination,
-      note: Note,
-      distance: Distance,
-      order_status_id: OrderStatus_ID,
-      total: Total,
-      cust_id: Cus_ID,
-      cust_name: Customer_Name,
-      cust_phone_no: Customer_Phone,
-      order_date: Order_Date,
-      voucher_id: Voucher_ID,
-      shipper_id: Shipper_ID,
-      shipper_name: Shipper_Name,
-      logistic_company_name: Logistic_Company_Name,
-      shipping_cost: Shipping_Cost,
-      product_name: Product_Name,
-      product_quantity: Quantity,
-      employee_name: Name,
+      order_id: order.Order_ID,
+      destination: order.Destination,
+      note: order.Note,
+      distance: order.Distance,
+      order_status_id: order.OrderStatus_ID,
+      total: order.Total,
+      cust_id: order.Cus_ID,
+      cust_name: order.Customer_Name,
+      cust_phone_no: order.Customer_Phone,
+      order_date: order.Order_Date,
+      voucher_id: order.Voucher_ID,
+      shipper_id: order.Shipper_ID,
+      shipper_name: order.Shipper_Name,
+      logistic_company_name: order.Logistic_Company_Name,
+      shipping_cost: order.Shipping_Cost,
+      product_name: order.Product_Name,
+      product_quantity: order.Quantity,
+      employee_name: order.Name,
     }));
+    console.log(orders)
     callback(null, { orders });
   } catch (error) {
     console.error("Database error:", error);
@@ -344,23 +345,23 @@ const getEmployeeOrders = async (call, callback) => {
       [empID]
     );
     const orders = rows[0].map((order) => ({
-      order_id: Order_ID,
-      destination: Destination,
-      note: Note,
-      distance: Distance,
-      order_status_id: OrderStatus_ID,
-      total: Total,
-      cust_id: Cus_ID,
-      cust_name: Customer_Name,
-      cust_phone_no: Customer_Phone,
-      order_date: Order_Date,
-      voucher_id: Voucher_ID,
-      shipper_id: Shipper_ID,
-      shipper_name: Shipper_Name,
-      logistic_company_name: Logistic_Company_Name,
-      shipping_cost: Shipping_Cost,
-      product_name: Product_Name,
-      product_quantity: Quantity,
+      order_id: order.Order_ID,
+      destination: order.Destination,
+      note: order.Note,
+      distance: order.Distance,
+      order_status_id: order.OrderStatus_ID,
+      total: order.Total,
+      cust_id: order.Cus_ID,
+      cust_name: order.Customer_Name,
+      cust_phone_no: order.Customer_Phone,
+      order_date: order.Order_Date,
+      voucher_id: order.Voucher_ID,
+      shipper_id: order.Shipper_ID,
+      shipper_name: order.Shipper_Name,
+      logistic_company_name: order.Logistic_Company_Name,
+      shipping_cost: order.Shipping_Cost,
+      product_name: order.Product_Name,
+      product_quantity: order.Quantity,
     }));
 
     callback(null, { orders });
@@ -411,13 +412,13 @@ const showShipperInfo = async (call, callback) => {
 
 const showVoucherInfo = async (call, callback) => {
   try {
-      const [rows] = await db.query(`CALL order_cus_voucher.ShowVoucherInfo()`);
-      const vouchers = rows[0].map(voucher => ({
-        id : voucher.ID,
-        name : voucher.Name,
-        price:voucher.Amount
-      }));
-      callback(null, { vouchers } );
+    const [rows] = await db.query(`CALL order_cus_voucher.ShowVoucherInfo()`);
+    const vouchers = rows[0].map((voucher) => ({
+      id: voucher.ID,
+      name: voucher.Name,
+      price: voucher.Amount,
+    }));
+    callback(null, { vouchers });
   } catch (error) {
     console.error("Database error:", error);
     callback({
@@ -452,55 +453,54 @@ const fetchProductList = async (call, callback) => {
   try {
     const [results] = await db.query("CALL batch_product.GetProductList()");
 
-    // results[0] because stored procedure results are nested in an extra array
-    const products = results[0].map((product) => ({
-      id: product.ID,
-      employee_id: product.Employee_ID,
-      name: product.Name,
-      description: product.Description,
-      origin: product.Origin,
-      tag: product.Tag,
-      storage_condition: product.Storage_Condition,
-      country_of_origin: product["Country of origin"], // Handle names with spaces
-      price: product.Price,
-      directions_for_use: product["Directions for use"], // Handle names with spaces
-      certificate: product.Certificate,
-      warning: product.Warning,
-      intended_user: product["Intended User"], // Handle names with spaces
-      total_amount_from_batch: product["Total amount from batch"], // Handle names with spaces
-    }));
+    const products = results[0].map((product) => {
+      const productData = {
+        id: product.ID,
+        employee_id: product.Employee_ID,
+        name: product.Name,
+        description: product.Description,
+        origin: product.Origin,
+        tag: product.Tag,
+        storage_condition: product.Storage_Condition,
+        country_of_origin: product["Country of origin"],
+        price: product.Price,
+        directions_for_use: product["Directions for use"],
+        certificate: product.Certificate,
+        warning: product.Warning,
+        intended_user: product["Intended User"],
+        total_amount_from_batch: product["Total amount from batch"],
+        product_type: product.ProductType.toUpperCase(),
 
-    callback(null, { products }); // Return an object with a 'products' field
-  } catch (error) {
-    console.error("Database error:", error);
-    callback({
-      code: grpc.status.INTERNAL, // Use grpc.status for better error codes
-      details: "Database error",
+        // Add fields directly, prefixed with product type
+        consumable_ingredient: product.Ingredient,
+        consumable_serving_size: product.Serving_size,
+        consumable_dosage: product.Dosage,
+        consumable_dosage_form: product.Dosage_form,
+        consumable_constraindication: product.Constraindication,
+
+        medicine_side_effect: product.Side_effect,
+        medicine_indication: product.Indication,
+        medicine_is_prescription_medicine: product.Is_Prescription_Medicine,
+
+        supplement_allergen_info: product.Allergen_info,
+
+        medical_equipment_usage_instruction: product.Usage_Instruction,
+        medical_equipment_material: product.Material,
+        medical_equipment_size_dimension: product["Size/Dimension"],
+        medical_equipment_requirement: product.Requirement,
+        medical_equipment_warranty: product.Warranty,
+        medical_equipment_sterility: product.Sterility,
+      };
+
+      return productData;
     });
-  }
-};
 
-const getBatchDetails = async (call, callback) => {
-  try {
-    const [results] = await db.query("CALL batch_product.GetBatchDetails()");
-    const batches = results[0].map((batch) => ({
-      batch_id: batch.Batch_ID,
-      cost: batch.Cost,
-      manufacturing_date: batch.Manufacturing_date,
-      expiry_date: batch.Expiry_date,
-      amount: batch.Amount,
-      warehouse_order_id: batch.WarehouseOrder_ID,
-      order_date: batch.Order_Date,
-      total_cost: batch.Total_cost,
-      inventory_mgr_id: batch.Inventory_mgr_ID,
-      order_type: batch.Order_Type,
-    }));
-    callback(null, { batches });
+    callback(null, { products });
   } catch (error) {
     console.error("Database error:", error);
     callback({
       code: grpc.status.INTERNAL,
-      details: "Database error while fetching batch details",
+      details: "Database error",
     });
   }
 };
@@ -517,10 +517,5 @@ module.exports = {
   getEmployeeOrders,
   showOrderStatus,
   showShipperInfo,
-  getCustomerDetails,
-  fetchProductList,
-  insertBatchData,
-  getBatchDetails,
-  signin,
-  showVoucherInfo
-};
+  getCustomerDetails, fetchProductList,signin,showVoucherInfo};
+

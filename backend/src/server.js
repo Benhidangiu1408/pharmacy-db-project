@@ -1,23 +1,34 @@
-const grpc = require('@grpc/grpc-js');
-const protoLoader = require('@grpc/proto-loader');
+const grpc = require("@grpc/grpc-js");
+const protoLoader = require("@grpc/proto-loader");
 
-const { fetchUsers,insertEmployee,
+const {
+  fetchUsers,
+  insertEmployee,
   updateEmployeePassword,
-  updateEmployeeJobType, showAllEmployees,
+  updateEmployeeJobType,
+  showAllEmployees,
   showOneEmployee,
   insertOrder,
   getAllOrders,
   getEmployeeOrders,
   showOrderStatus,
   showShipperInfo,
+<<<<<<< HEAD
   getCustomerDetails,fetchProductList,
   insertBatchData,
   getBatchDetails,
   signin
  } = require('./services');
+=======
+  getCustomerDetails,
+  fetchProductList,
+  signin,
+  showVoucherInfo,
+  addProduct
+} = require("./services");
+>>>>>>> origin/fetch-voucher
 
-
-const PROTO_PATH = './protos/service.proto';
+const PROTO_PATH = "./protos/service.proto";
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -29,28 +40,44 @@ const databaseService = protoDescriptor.DatabaseService;
 
 const server = new grpc.Server();
 
-server.addService(databaseService.service, { GetUser: fetchUsers,InsertEmployee: insertEmployee,
+server.addService(databaseService.service, {
+  GetUser: fetchUsers,
+  InsertEmployee: insertEmployee,
   UpdateEmployeePassword: updateEmployeePassword,
-  UpdateEmployeeJobType: updateEmployeeJobType,ShowAllEmployees: showAllEmployees,
+  UpdateEmployeeJobType: updateEmployeeJobType,
+  ShowAllEmployees: showAllEmployees,
   ShowOneEmployee: showOneEmployee,
   InsertOrder: insertOrder,
   GetAllOrders: getAllOrders,
   GetEmployeeOrders: getEmployeeOrders,
   ShowOrderStatus: showOrderStatus,
   ShowShipperInfo: showShipperInfo,
+<<<<<<< HEAD
   GetCustomerDetails: getCustomerDetails, GetProductList: fetchProductList,
   insertBatchData: insertBatchData,
   GetBatchDetails: getBatchDetails,
   Signin:signin
 });
 
+=======
+  GetCustomerDetails: getCustomerDetails,
+  GetProductList: fetchProductList,
+  Signin: signin,
+  ShowVoucherInfo: showVoucherInfo,
+  AddProduct: addProduct,
+});
+>>>>>>> origin/fetch-voucher
 
 const PORT = 50051;
-server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (err, port) => {
-  if (err) throw err;
-  console.log(`gRPC server running on port ${port}`);
-  server;
-});
+server.bindAsync(
+  `0.0.0.0:${PORT}`,
+  grpc.ServerCredentials.createInsecure(),
+  (err, port) => {
+    if (err) throw err;
+    console.log(`gRPC server running on port ${port}`);
+    server;
+  }
+);
 
 // const grpc = require('@grpc/grpc-js');
 // const { Server } = require('grpc-web-node-server');
@@ -79,8 +106,3 @@ server.bindAsync(`0.0.0.0:${PORT}`, grpc.ServerCredentials.createInsecure(), (er
 
 // grpcWebServer.start();
 // console.log('gRPC-Web server running on http://localhost:8080');
-
-
-
-
-

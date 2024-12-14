@@ -37,20 +37,36 @@ const EmployeeForm = () => {
     }
 
     // Tạo form data để gửi file ảnh
-    const formData = new FormData();
-    formData.append("empName", name);
-    formData.append("empAddress", address);
-    formData.append("empAccount", account);
-    formData.append("empPassword", password);
-    formData.append("empPhoneNo", phoneNo);
-    formData.append("empWorkingType", workingType);
-    formData.append("empJobType", jobType);
-    formData.append("empCredential", credential);
+    const formData = {};
+    formData["name"]= name;
+    formData["address"]= address;
+    formData["account"]= account;
+    formData["password" ]=password;
+    formData["phone_no"]= phoneNo;
+    formData["working_type"]= workingType;
+    formData["job_type"]= jobType;
+    formData["credential"]= credential;
+    
+    // formData.append("empName", name);
+    // formData.append("empAddress", address);
+    // formData.append("empAccount", account);
+    // formData.append("empPassword", password);
+    // formData.append("empPhoneNo", phoneNo);
+    // formData.append("empWorkingType", workingType);
+    // formData.append("empJobType", jobType);
+    // formData.append("empCredential", credential);
 
+    const send = {
+      ...formData,
+    };
+    console.log(JSON.stringify(send));
     // Gửi thông tin đến backend (Node.js)
-    fetch("/api/employees", {
+    fetch("http://localhost:8080/api/v1/insertEmployee", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(send),
     })
       .then((response) => {
         if (!response.ok) throw new Error("Failed to add employee.");
@@ -100,9 +116,9 @@ const EmployeeForm = () => {
         <div>
           <label>Vị trí công việc:</label>
           <select name="jobType" ref={jobTypeRef} required>
-            <option value="Dược sĩ">Dược sĩ</option>
-            <option value="Quản kho">Quản kho</option>
-            <option value="Quản hàng">Quản hàng</option>
+            <option value="pharmacist">Dược sĩ</option>
+            <option value="inventory manager">Quản kho</option>
+            <option value="product manager">Quản hàng</option>
           </select>
         </div>
         <div>

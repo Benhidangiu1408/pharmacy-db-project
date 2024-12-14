@@ -324,6 +324,38 @@ app.get("/api/v1/getBatchDetails", (req, res) => {
   });
 });
 
+
+app.post('/api/v1/addproduct', (req, res) => {
+  const productData = req.body;
+
+  client.AddProduct(productData, (err, response) => {
+    if (err) {
+      console.error("gRPC Error:", err);
+      if (err.code === grpc.status.UNIMPLEMENTED) {
+        res.status(501).send({ error: "gRPC method not implemented on the server" });
+      } else {
+        res.status(500).send({ error: "An error occurred while adding the product" });
+      }
+    } else {
+      // Handle the PostStat response
+      switch (response.code) {
+        case 0: // Success (OK)
+          res.status(201).send({ message: "Product added successfully", details: response.details });
+          break;
+        case 1: // CANCELLED
+          res.status(499).send({ error: "Request cancelled", message: response.message, details: response.details });
+          break;
+        case 2: // UNKNOWN
+          res.status(500).send({ error: "Unknown error", message: response.message, details: response.details });
+          break;
+        // Add cases for other gRPC status codes as needed...
+        default:
+          res.status(500).send({ error: "An unexpected error occurred", message: response.message, details: response.details });
+          break;
+      }
+    }
+  });
+});
 // Serve Frontend Static Files
 // app.use(express.static(path.join(__dirname, 'dist')));
 
