@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import "./form.css";
 import useBatchStore from "../../current_data/batch";
+import useorderStore from "../../current_data/order";
 
 const BatchForm = () => {
-  const { getAllBatches } = useBatchStore(); // Lấy hàm login
+  const { getAllBatches,logoutBatches } = useBatchStore(); // Lấy hàm login
+  const{logoutOrders}=useorderStore()
   const batches = getAllBatches();
 
   // Tạo các ref cho các input

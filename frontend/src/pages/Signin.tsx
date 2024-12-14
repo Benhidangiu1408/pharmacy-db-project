@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSigninEmployee } from "../hooks/useSigninEmployee";
 import axios, { AxiosError } from 'axios';
 import { SigninRequest, SigninResponse } from "../entities/Employee";
+import useUserStore from "../current_data/user";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,8 @@ const Signin = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  const{login}=useUserStore()
 
   const navigate = useNavigate();
 
@@ -52,8 +55,13 @@ const Signin = () => {
       setIsLoading(false);
     }
 
-    if (bruh.id) {
-      // login(user);
+    if (bruh?.id) {
+      // login(user); 
+      login({
+        id: bruh.id,
+        name: bruh.name,
+        jobType: bruh.jobType,
+      });
       navigate("/homepage");
     } else {
       setErrorMessage("Tài khoản hoặc mật khẩu không đúng!");
