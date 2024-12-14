@@ -14,6 +14,8 @@ service DatabaseService {
     rpc ShowOrderStatus (NoParams) returns (OrderStatusResponse);
     rpc ShowShipperInfo (NoParams) returns (ShipperListResponse);
     rpc GetCustomerDetails (NoParams) returns (CustomerListResponse);
+    rpc insertBatchData (insertBatchDataRequest) returns (insertBatchDataResponse);
+    rpc GetBatchDetails(NoParams) returns (BatchResponse);
 }
 
 message UserRequest {
@@ -198,3 +200,37 @@ message ProductListResponse {
   repeated Product products = 1;
 
 }
+
+message insertBatchDataResponse {
+  repeated Batch Batches = 1;
+}
+
+message insertBatchDataRequest {
+  int32 warehouse_id = 1;
+  int32 product_id = 2;
+  int32 employee_id = 3;
+  int32 quantity = 4;
+  string type = 5;
+  string expiry_date = 6;
+  string manufacturing_date = 7;
+  double price = 8;
+}
+
+message BatchResponse {
+  repeated Batch batches = 1;
+}
+
+message Batch {
+  int32 batch_id = 1;
+  double cost = 2;
+  string manufacturing_date = 3;
+  string expiry_date = 4;
+  int32 amount = 5;
+  int32 warehouse_order_id = 6;
+  string order_date = 7;
+  double total_cost = 8;
+  int32 inventory_mgr_id = 9;
+  string order_type = 10;
+}
+
+
