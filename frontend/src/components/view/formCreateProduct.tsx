@@ -42,50 +42,55 @@ const ProductForm = () => {
     const description = descriptionRef.current?.value || "";
     const origin = originRef.current?.value || "";
     const tag = tagRef.current?.value || "";
-    const storageCondition = storageConditionRef.current?.value || "";
-    const countryOfOrigin = countryOfOriginRef.current?.value || "";
+    const storage_condition = storageConditionRef.current?.value || "";
+    const country_of_origin = countryOfOriginRef.current?.value || "";
     const price = priceRef.current?.value || "";
-    const directionsForUse = directionsForUseRef.current?.value || "";
+    const directions_for_use = directionsForUseRef.current?.value || "";
     const certificate = certificateRef.current?.value || "";
     const warning = warningRef.current?.value || "";
-    const intendedUser = intendedUserRef.current?.value || "";
-    const productType = typeRef.current?.value || "";
+    const intended_user = intendedUserRef.current?.value || "";
+    const product_type = typeRef.current?.value || "";
 
     const additionalData = {};
-    if (productType === "supplement") {
-      additionalData["allergenInfo"] = allergenInfoRef.current?.value || "";
-    } else if (productType === "medicine") {
-      additionalData["sideEffect"] = sideEffectRef.current?.value || "";
-      additionalData["indication"] = indicationRef.current?.value || "";
-      additionalData["isPrescriptionMedicine"] =
-        isPrescriptionMedicineRef.current?.value || "";
-    } else if (productType === "equipment") {
-      additionalData["usageInstruction"] =
-        usageInstructionRef.current?.value || "";
-      additionalData["material"] = materialRef.current?.value || "";
-      additionalData["size"] = sizeRef.current?.value || "";
-      additionalData["requirement"] = requirementRef.current?.value || "";
-      additionalData["warranty"] = warrantyRef.current?.value || "";
-      additionalData["sterility"] = sterilityRef.current?.value || "";
+    if (product_type === "SUPPLEMENT" || product_type === "MEDICINE") {
+      additionalData["consumable_serving_size"] = "";
+      additionalData["consumable_dosage"] = "";
+      additionalData["consumable_dosage_form"] = "";
+      additionalData["consumable_constraindication"] = "";
     }
-
+    if (product_type === "SUPPLEMENT") {
+      additionalData["supplement_allergen_info"] = allergenInfoRef.current?.value || "";
+    } else if (product_type === "MEDICINE") {
+      additionalData["medicine_side_effect"] = sideEffectRef.current?.value || "";
+      additionalData["medicine_indication"] = indicationRef.current?.value || "";
+      additionalData["medicine_is_prescription_medicine"] =
+        isPrescriptionMedicineRef.current?.value || "";
+    } else if (product_type === "EQUIPMENT") {
+      additionalData["medical_equipment_usage_instruction"] =
+        usageInstructionRef.current?.value || "";
+      additionalData["medical_equipment_material"] = materialRef.current?.value || "";
+      additionalData["medical_equipment_size_dimension"] = sizeRef.current?.value || "";
+      additionalData["medical_equipment_requirement"] = requirementRef.current?.value || "";
+      additionalData["medical_equipment_warranty"] = warrantyRef.current?.value || "";
+      additionalData["medical_equipment_sterility"] = sterilityRef.current?.value || "";
+    }
     const newProduct = {
       name,
       description,
       origin,
       tag,
-      storageCondition,
-      countryOfOrigin,
+      storage_condition,
+      country_of_origin,
       price,
-      directionsForUse,
+      directions_for_use,
       certificate,
       warning,
-      intendedUser,
-      productType,
-      additionalData,
+      intended_user,
+      "total_amount_from_batch" : 0,
+      product_type,
+      ...additionalData,
     };
-
-    fetch("/api/products", {
+    fetch("http://localhost:8080/api/v1/addproduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -179,9 +184,9 @@ const ProductForm = () => {
             onChange={(e) => setType(e.target.value)}
             required
           >
-            <option value="supplement">Supplement</option>
-            <option value="medicine">Medicine</option>
-            <option value="equipment">Equipment</option>
+            <option value="SUPPLEMENT">Supplement</option>
+            <option value="MEDICINE">Medicine</option>
+            <option value="EQUIPMENT">Equipment</option>
           </select>
         </div>
 

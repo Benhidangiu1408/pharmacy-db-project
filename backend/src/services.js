@@ -53,20 +53,20 @@ const signin = async (call, callback) => {
     const SigninResponse = results[0][0];
     // Access the OUT parameters from the result set
     const empID = SigninResponse.ID;
-    const employeeJobType = SigninResponse.JobType;    
-    const eName = SigninResponse.Name;    
+    const employeeJobType = SigninResponse.JobType;
+    const eName = SigninResponse.Name;
 
     callback(null, {
-      id : empID,
-      jobType : employeeJobType,
-      name : eName
+      id: empID,
+      jobType: employeeJobType,
+      name: eName,
     });
   } catch (error) {
     console.error("Database error:", error);
     callback({
-      id : -1,
-      jobType : "Nope",
-      name : "Wrong"
+      id: -1,
+      jobType: "Nope",
+      name: "Wrong",
     });
   }
 };
@@ -361,16 +361,19 @@ const showShipperInfo = async (call, callback) => {
 
 const showVoucherInfo = async (call, callback) => {
   try {
-      const [rows] = await db.query(`CALL order_cus_voucher.ShowVoucherInfo()`);
-      const vouchers = rows[0].map(voucher => ({
-        id : voucher.ID,
-        name : voucher.Name,
-        price:voucher.Amount
-      }));
-      callback(null, { vouchers } );
+    const [rows] = await db.query(`CALL order_cus_voucher.ShowVoucherInfo()`);
+    const vouchers = rows[0].map((voucher) => ({
+      id: voucher.ID,
+      name: voucher.Name,
+      price: voucher.Amount,
+    }));
+    callback(null, { vouchers });
   } catch (error) {
-      console.error('Database error:', error);
-      callback({ code: 13, details: 'Database error while fetching shipper info' });
+    console.error("Database error:", error);
+    callback({
+      code: 13,
+      details: "Database error while fetching shipper info",
+    });
   }
 };
 
@@ -399,31 +402,149 @@ const fetchProductList = async (call, callback) => {
   try {
     const [results] = await db.query("CALL batch_product.GetProductList()");
 
-    // results[0] because stored procedure results are nested in an extra array
-    const products = results[0].map((product) => ({
-      id: product.ID,
-      employee_id: product.Employee_ID,
-      name: product.Name,
-      description: product.Description,
-      origin: product.Origin,
-      tag: product.Tag,
-      storage_condition: product.Storage_Condition,
-      country_of_origin: product["Country of origin"], // Handle names with spaces
-      price: product.Price,
-      directions_for_use: product["Directions for use"], // Handle names with spaces
-      certificate: product.Certificate,
-      warning: product.Warning,
-      intended_user: product["Intended User"], // Handle names with spaces
-      total_amount_from_batch: product["Total amount from batch"], // Handle names with spaces
-    }));
+    const products = results[0].map((product) => {
+      const productData = {
+        id: product.ID,
+        employee_id: product.Employee_ID,
+        name: product.Name,
+        description: product.Description,
+        origin: product.Origin,
+        tag: product.Tag,
+        storage_condition: product.Storage_Condition,
+        country_of_origin: product["Country of origin"],
+        price: product.Price,
+        directions_for_use: product["Directions for use"],
+        certificate: product.Certificate,
+        warning: product.Warning,
+        intended_user: product["Intended User"],
+        total_amount_from_batch: product["Total amount from batch"],
+        product_type: product.ProductType.toUpperCase(),
 
-    callback(null, { products }); // Return an object with a 'products' field
+        // Add fields directly, prefixed with product type
+        consumable_ingredient: product.Ingredient,
+        consumable_serving_size: product.Serving_size,
+        consumable_dosage: product.Dosage,
+        consumable_dosage_form: product.Dosage_form,
+        consumable_constraindication: product.Constraindication,
+
+        medicine_side_effect: product.Side_effect,
+        medicine_indication: product.Indication,
+        medicine_is_prescription_medicine: product.Is_Prescription_Medicine,
+
+        supplement_allergen_info: product.Allergen_info,
+
+        medical_equipment_usage_instruction: product.Usage_Instruction,
+        medical_equipment_material: product.Material,
+        medical_equipment_size_dimension: product["Size/Dimension"],
+        medical_equipment_requirement: product.Requirement,
+        medical_equipment_warranty: product.Warranty,
+        medical_equipment_sterility: product.Sterility,
+      };
+
+      return productData;
+    });
+
+    callback(null, { products });
   } catch (error) {
     console.error("Database error:", error);
     callback({
-      code: grpc.status.INTERNAL, // Use grpc.status for better error codes
+      code: grpc.status.INTERNAL,
       details: "Database error",
     });
+  }
+};
+
+const addProduct = async (call, callback) => {
+  try {
+    const product = call.request;
+
+    // Prepare parameters for the stored procedure
+    const params = [
+      product.name,
+      product.description,
+      product.origin,
+      product.tag,
+      product.storage_condition,
+      product.country_of_origin,
+      product.price,
+      product.directions_for_use,
+      product.certificate,
+      product.warning,
+      product.intended_user,
+      product.total_amount_from_batch,
+      product.product_type.toLowerCase(), // Convert to lowercase for the stored procedure
+
+      // Consumable attributes
+      product.consumable_ingredient,
+      product.consumable_serving_size,
+      product.consumable_dosage,
+      product.consumable_dosage_form,
+      product.consumable_constraindication,
+
+      // Medicine attributes
+      product.medicine_side_effect,
+      product.medicine_indication,
+      product.medicine_is_prescription_medicine,
+
+      // Supplement attributes
+      product.supplement_allergen_info,
+
+      // Medical equipment attributes
+      product.medical_equipment_usage_instruction,
+      product.medical_equipment_material,
+      product.medical_equipment_size_dimension,
+      product.medical_equipment_requirement,
+      product.medical_equipment_warranty,
+      product.medical_equipment_sterility,
+    ];
+
+    // Call the stored procedure
+    const [results] = await db.query(
+      "CALL batch_product.InsertProduct(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      params
+    );
+
+    // Extract the new product ID
+    const newProductId = results[0][0].new_product_id;
+
+    // Check for successful insertion (based on the returned ID)
+    if (newProductId > 0) {
+      callback(null, {
+        code: 0, // gRPC status code OK
+        message: "Product added successfully",
+        details: `Product ID: ${newProductId}`,
+      });
+    } else {
+      callback({
+        code: grpc.status.UNKNOWN,
+        message: "Failed to add product",
+        details: "Stored procedure did not return a valid product ID",
+      });
+    }
+  } catch (error) {
+    console.error("Database error:", error);
+    if (error.code === "ER_DUP_ENTRY") {
+      callback({
+        code: grpc.status.ALREADY_EXISTS,
+        message: "Duplicate product entry",
+        details: "A product with the same key attributes already exists.",
+      });
+    } else if (
+      error.code === "ER_SIGNAL_EXCEPTION" &&
+      error.sqlMessage.includes("Invalid ProductType")
+    ) {
+      callback({
+        code: grpc.status.INVALID_ARGUMENT,
+        message: "Invalid product type",
+        details: error.sqlMessage,
+      });
+    } else {
+      callback({
+        code: grpc.status.INTERNAL,
+        message: "Database error",
+        details: error.message,
+      });
+    }
   }
 };
 
@@ -439,5 +560,9 @@ module.exports = {
   getEmployeeOrders,
   showOrderStatus,
   showShipperInfo,
-  getCustomerDetails, fetchProductList,signin,showVoucherInfo};
-
+  getCustomerDetails,
+  fetchProductList,
+  signin,
+  showVoucherInfo,
+  addProduct
+};
