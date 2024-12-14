@@ -52,7 +52,7 @@ const Signin = () => {
       setIsLoading(false);
     }
 
-    if (bruh.id) {
+    if (bruh?.id) {
       // login(user);
       navigate("/homepage");
     } else {

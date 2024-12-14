@@ -64,8 +64,9 @@ const signin = async (call, callback) => {
   } catch (error) {
     console.error("Database error:", error);
     callback({
-      code: grpc.status.INTERNAL,
-      details: "Database error while signing in",
+      id : -1,
+      jobType : "Nope",
+      name : "Wrong"
     });
   }
 };
