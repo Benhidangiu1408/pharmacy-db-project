@@ -94,7 +94,7 @@ const Menu: React.FC = () => {
           src="/BK-logo.jpg"
           alt="Logo"
           className="logo"
-          style={{ height: "50px" }}
+          style={{ height: "50px", width: "50px" }}
         />
       </a>
       <a href="/homepage" className="menu_left">

@@ -3,8 +3,8 @@ import { FaEdit, FaTrash, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 interface JsonTableProps {
   data: any[] | undefined;
-  onEdit: (item: any) => void;
-  onDelete: (item: any) => void;
+  onEdit: ((item: any) => void) | null | undefined;
+  onDelete: ((item: any) => void) | null | undefined;
 }
 
 const JsonTable: React.FC<JsonTableProps> = ({ data, onEdit, onDelete }) => {
@@ -16,7 +16,7 @@ const JsonTable: React.FC<JsonTableProps> = ({ data, onEdit, onDelete }) => {
 
   const headers = Object.keys(data[0]);
   const initialVisibleHeaders = headers.slice(0, 6); // Show first 6 columns
-  const remainingHeaders = headers.slice(6);       // Remaining columns
+  const remainingHeaders = headers.slice(6); // Remaining columns
 
   const toggleRow = (index: number) => {
     if (expandedRows.includes(index)) {
@@ -54,7 +54,11 @@ const JsonTable: React.FC<JsonTableProps> = ({ data, onEdit, onDelete }) => {
                   className="json-table__button json-table__button--expand"
                   onClick={() => toggleRow(index)}
                 >
-                  {expandedRows.includes(index) ? <FaChevronUp /> : <FaChevronDown />}
+                  {expandedRows.includes(index) ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
                 </button>
               </td>
               {initialVisibleHeaders.map((header) => (
@@ -67,18 +71,20 @@ const JsonTable: React.FC<JsonTableProps> = ({ data, onEdit, onDelete }) => {
               )}
               <td className="json-table__cell">
                 <div className="json-table__action-buttons">
-                  <button
-                    className="json-table__button json-table__button--edit"
-                    onClick={() => onEdit(item)}
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
+                  {onEdit && (
+                    <button
+                      className="json-table__button json-table__button--edit"
+                      onClick={() => onEdit(item)}
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
+                  {onDelete && (<button
                     className="json-table__button json-table__button--delete"
                     onClick={() => onDelete(item)}
                   >
                     <FaTrash />
-                  </button>
+                  </button>)}
                 </div>
               </td>
             </tr>
@@ -89,8 +95,13 @@ const JsonTable: React.FC<JsonTableProps> = ({ data, onEdit, onDelete }) => {
                   <div className="json-table__expanded-content">
                     {/* Display remaining fields */}
                     {remainingHeaders.map((header) => (
-                      <div key={`${index}-${header}`} className="json-table__expanded-field">
-                        <strong>{header.charAt(0).toUpperCase() + header.slice(1)}:</strong>{" "}
+                      <div
+                        key={`${index}-${header}`}
+                        className="json-table__expanded-field"
+                      >
+                        <strong>
+                          {header.charAt(0).toUpperCase() + header.slice(1)}:
+                        </strong>{" "}
                         {JSON.stringify(item[header])}
                       </div>
                     ))}
