@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./db'); // Import the db module
 const grpc = require('@grpc/grpc-js');
 const cors = require('cors');
 // const protoLoader = require('@grpc/proto-loader');
@@ -26,6 +27,59 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const PORT = 8080;
+
+app.get('/api/v2/showAllEmployees/:id', async (req, res) => {
+    // const { id } = req.body; // Extract 'id' from the request body
+    const id = req.params.id;
+  
+    try {
+      // Validate input
+      if (!id) {
+        return res.status(400).send({ error: 'ID is required in the request body' });
+      }
+  
+      // Query the database
+    //   const [results] = await db.query('SELECT * FROM cho WHERE id = ?', [id]);
+      const [results] = await db.query(
+        `CALL employee_prescription.ShowOneEmployee(?)`,
+        [id]
+      );
+  
+      // Check if the result is found
+      if (results.length === 0) {
+        return res.status(404).send({ error: 'No user found with the given ID' });
+      }
+  
+      res.json(results); // Return the first row
+    } catch (error) {
+      console.error('Database Error:', error);
+      res.status(500).send({ error: 'Failed to fetch user data' });
+    }
+  });
+
+  app.get('/api/v2/showAllEmployees', async (req, res) => {
+    // const { id } = req.body; // Extract 'id' from the request body
+  
+    try {
+      // Validate input
+      
+  
+      // Query the database
+    //   const [results] = await db.query('SELECT * FROM cho WHERE id = ?', [id]);
+      const [results] = await db.query(
+        `CALL employee_prescription.ShowAllEmployees()`
+      );
+      // Check if the result is found
+      if (results.length === 0) {
+        return res.status(404).send({ error: 'No user found with the given ID' });
+      }
+  
+      res.json(results); // Return the first row
+    } catch (error) {
+      console.error('Database Error:', error);
+      res.status(500).send({ error: 'Failed to fetch user data' });
+    }
+  });
 
 app.get('/api/v1/example/:id', (req, res) => {
     const id = req.params.id;

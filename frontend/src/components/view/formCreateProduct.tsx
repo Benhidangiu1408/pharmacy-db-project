@@ -17,7 +17,7 @@ const ProductForm = () => {
   const typeRef = useRef<HTMLSelectElement>(null);
 
   // State để hiển thị các trường bổ sung theo loại sản phẩm
-  const [type, setType] = useState("supplement");
+  const [type, setType] = useState("SUPPLEMENT");
 
   // Ref cho các trường bổ sung
   const allergenInfoRef = useRef<HTMLInputElement>(null);
@@ -283,7 +283,7 @@ const ProductForm = () => {
             <p>{message}</p>
           </div>
         )}
-        <button className="form_button" type="submit">
+        <button className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]" type="submit">
           Xác nhận
         </button>
       </form>
