@@ -46,12 +46,12 @@ const BatchForm = () => {
       return; // Không gửi form nếu quantity không hợp lệ
     }
 
-    const today = new Date();
-    const manufacturingDateObj = new Date(manufacturingDate);
-    if (manufacturingDateObj >= today) {
-      setMessage("Ngày sản xuất phải trước ngày hôm nay.");
-      return; // Không gửi form nếu manufacturingDate không hợp lệ
-    }
+    // const today = new Date();
+    // const manufacturingDateObj = new Date(manufacturingDate);
+    // if (manufacturingDateObj >= today) {
+    //   setMessage("Ngày sản xuất phải trước ngày hôm nay.");
+    //   return; // Không gửi form nếu manufacturingDate không hợp lệ
+    // }
 
     const newBatch = {
       // name,

@@ -5,7 +5,7 @@ import JsonTable from "./jsonTable"; // Import the table component
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
-import { Navigate, Outlet } from "react-router-dom";
+import useUserStore from "../../current_data/user";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -37,6 +37,9 @@ const ProductView: React.FC = () => {
   const categoryRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  
+  const {info} = useUserStore();
+  const role = info.jobType;
 
   const generateId = () => {
     if (products && products.length > 0) {
@@ -46,12 +49,16 @@ const ProductView: React.FC = () => {
     }
   };
 
-  const handleEditProduct = (product: Product) => {navigate('/homepage/productdetail', { state: { product: product } });};
+  var handleEditProduct;
+  var handleDeleteProduct;
+  var handleToggleRestock;
+  if (role == "product manager" || role == "admin") {
+    handleEditProduct = (product: Product) => {navigate('/homepage/productdetail', { state: { product: product } });};
+    handleDeleteProduct = (productId: number) => {navigate('/delete/product', { state: { int: productId } });};
+    handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
+  }
 
-  const handleDeleteProduct = (productId: number) => {navigate('/delete/product', { state: { int: productId } });};
-
-  const handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
-
+  console.log("This is a",role);
   const addProduct =() => navigate("/homepage/CreateProducts");
 
   return (

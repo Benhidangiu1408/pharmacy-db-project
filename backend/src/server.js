@@ -18,8 +18,8 @@ const {
   signin,
   showVoucherInfo,
   addProduct,
-  insertBatchData,
   getBatchDetails,
+  insertBatchData,
 } = require("./services");
 
 const PROTO_PATH = "./protos/service.proto";
