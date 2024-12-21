@@ -17,7 +17,9 @@ const {
   fetchProductList,
   signin,
   showVoucherInfo,
-  addProduct
+  addProduct,
+  getBatchDetails,
+  insertBatchData,
 } = require("./services");
 
 const PROTO_PATH = "./protos/service.proto";
@@ -49,6 +51,8 @@ server.addService(databaseService.service, {
   Signin: signin,
   ShowVoucherInfo: showVoucherInfo,
   AddProduct: addProduct,
+  GetBatchDetails: getBatchDetails,
+  InsertBatchData: insertBatchData,
 });
 
 const PORT = 50051;

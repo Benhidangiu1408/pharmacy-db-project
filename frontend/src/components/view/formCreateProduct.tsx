@@ -190,7 +190,7 @@ const ProductForm = () => {
           </select>
         </div>
 
-        {type === "supplement" && (
+        {type === "SUPPLEMENT" && (
           <div>
             <label>Thông tin dị ứng:</label>
             <input
@@ -202,7 +202,7 @@ const ProductForm = () => {
           </div>
         )}
 
-        {type === "medicine" && (
+        {type === "MEDICINE" && (
           <>
             <div>
               <label>Tác dụng phụ:</label>
@@ -236,7 +236,7 @@ const ProductForm = () => {
           </>
         )}
 
-        {type === "equipment" && (
+        {type === "EQUIPMENT" && (
           <>
             <div>
               <label>Hướng dẫn sử dụng:</label>
