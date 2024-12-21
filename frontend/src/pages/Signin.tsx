@@ -3,7 +3,7 @@ import "./signin.css";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useSigninEmployee } from "../hooks/useSigninEmployee";
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 import { SigninRequest, SigninResponse } from "../entities/Employee";
 import useUserStore from "../current_data/user";
 
@@ -12,7 +12,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [account, setAccount] = useState('');
+  const [account, setAccount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState<SigninResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +21,7 @@ const Signin = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const{login}=useUserStore()
+  const { login } = useUserStore();
 
   const navigate = useNavigate();
 
@@ -30,36 +30,41 @@ const Signin = () => {
     var bruh;
     try {
       const response = await axios.post<SigninResponse>(
-        'http://localhost:8080/signin',
+        "http://localhost:8080/signin",
         {
           account: email,
           password: password,
         }
       );
-  
+
       setResponse(response.data);
-      console.log(response.data)
-      bruh = response.data
+      console.log(response.data);
+      bruh = response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const serverError = error as AxiosError<SigninResponse>;
         if (serverError && serverError.response) {
-          setError('An error occurred during sign-in');
+          setError("An error occurred during sign-in");
         } else {
-          setError('Network error or request was cancelled');
+          setError("Network error or request was cancelled");
         }
       } else {
-        setError('An unexpected error occurred');
+        setError("An unexpected error occurred");
       }
     } finally {
       setIsLoading(false);
     }
 
     if (bruh?.id) {
-      // login(user); 
+      // login(user);
       login({
         id: bruh.id,
         name: bruh.name,
+        address: bruh.address,
+        account: bruh.account,
+        password: bruh.password,
+        phone_no: bruh.phone_no,
+        working_type: bruh.working_type,
         jobType: bruh.jobType,
       });
       navigate("/homepage");

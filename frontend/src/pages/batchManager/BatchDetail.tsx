@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import BatchDetail from "../../components/view/showBatchDetail";
 
-const BatchDetail = () => {
-  return (
-    <div>BatchDetail</div>
-  )
-}
+const BatchDetailView: React.FC = () => {
+  return <BatchDetail />;
+};
 
-export default BatchDetail
+export default BatchDetailView;
