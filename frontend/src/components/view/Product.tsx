@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import JsonTable from "./jsonTable"; // Import the table component
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
@@ -32,13 +32,13 @@ const formVariants = {
 // --- Main Component ---
 const ProductView: React.FC = () => {
   const { isLoading, isError, data, error } = useProducts();
-  const products = data? data.products : [];
+  const products = data ? data.products : [];
   const nameRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  
-  const {info} = useUserStore();
+
+  const { info } = useUserStore();
   const role = info.jobType;
 
   const generateId = () => {
@@ -49,17 +49,44 @@ const ProductView: React.FC = () => {
     }
   };
 
+  const handleSubmit = async (productId:number) => {
+    // e.preventDefault();
+
+    // Lấy giá trị từ các ref
+    // const newPass = nameRef.current?.value || "";
+
+    console.log({productId})
+    fetch(`/api/v2/disableProduct/${productId.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: ,
+    })
+    
+  };
+
   var handleEditProduct;
   var handleDeleteProduct;
   var handleToggleRestock;
   if (role == "product manager" || role == "admin") {
-    handleEditProduct = (product: Product) => {navigate('/homepage/productdetail', { state: { product: product } });};
-    handleDeleteProduct = (productId: number) => {navigate('/delete/product', { state: { int: productId } });};
-    handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
+    handleEditProduct = (product: Product) => {
+      navigate("/homepage/productdetail", { state: { product: product } });
+    };
+    // handleDeleteProduct = (productId: number) => {
+    //   navigate("/delete/product", { state: { int: productId } });
+    // };
+
+    handleDeleteProduct = (productId: number) => (
+      
+      handleSubmit(productId)
+    );
+      // handleToggleRestock
   }
 
-  console.log("This is a",role);
-  const addProduct =() => navigate("/homepage/CreateProducts");
+
+  console.log("This is a", role);
+  const addProduct = () => navigate("/homepage/CreateProducts");
 
   return (
     <motion.div

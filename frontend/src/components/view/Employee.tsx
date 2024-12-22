@@ -48,19 +48,31 @@ const EmployeeView: React.FC = () => {
       return 1;
     }
   };
+  const handleSubmit = async (productId: number) => {
+    // e.preventDefault();
 
+    // Lấy giá trị từ các ref
+    // const newPass = nameRef.current?.value || "";
+
+    console.log(productId)
+    fetch(`/api/v2/disableEmployee/${productId.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: ,
+    })
+    
+  };
   const handleEditProduct = (product: Employee) => {
     navigate("/homepage/AccountDetail", { state: { product: product } });
   };
 
-  const handleDeleteProduct = (productId: number) => {
-    navigate("/delete/product", { state: { int: productId } });
-  };
+  // const handleDeleteProduct = (productId: number) => {
+  //   navigate("/delete/product", { state: { int: productId } });
+  // }; 
 
-  const handleToggleRestock = (productId: number) => {
-    navigate("/restock/product", { state: { int: productId } });
-  };
-
+  const handleDeleteProduct = (productId: number) => (handleSubmit(productId))
   const addProduct = () => navigate("/homepage/CreateAccount");
 
   return (
