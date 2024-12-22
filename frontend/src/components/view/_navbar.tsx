@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
           src="BK-logo.jpg"
           alt="Logo"
           className="logo"
-          style={{ height: "50px" }}
+          style={{ height: "50px", width:"50px" }}
         />
       </a>
       <a href="/signin" className="menu_right flex ml-auto pr-10 text-black">

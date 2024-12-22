@@ -3,15 +3,17 @@ import "./form.css";
 import useorderStore from "../../current_data/order";
 import useUserStore from "../../current_data/user";
 import useBatchStore from "../../current_data/batch";
+import useShippers from "../../hooks/useShippers";
+import useVouchers from "../../hooks/useVouchers";
 
 const OrderForm = () => {
   // Tạo các ref cho các input
-  const { getAllorders, logoutOrders} = useorderStore(); // Lấy hàm login
+  const { getAllorders, logoutOrders } = useorderStore(); // Lấy hàm login
   const { getInfo } = useUserStore(); // Lấy hàm login
-  const{logoutBatches}=useBatchStore()
+  const { logoutBatches } = useBatchStore();
 
   const orders = getAllorders();
-  const info=getInfo()
+  const info = getInfo();
 
   const destinationRef = useRef<HTMLInputElement>(null);
   const noteRef = useRef<HTMLInputElement>(null);
@@ -28,51 +30,91 @@ const OrderForm = () => {
 
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("success"); // success hoặc error
+  const { isLoading, isError, data, error } = useShippers(); //shippers
+  const { data: vouchers } = useVouchers(); //vouchers
+  const shippers2 = data ? data.shippers : [];
+  const vouchers2 = data ? vouchers.vouchers : [];
+
+  // Function to calculate the total
+  const calculateTotal = () => {
+    return orders.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    );
+  };
 
   // Hàm để gửi dữ liệu đến backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     logoutBatches();
     logoutOrders();
+
     // Lấy giá trị từ các ref
     const destination = destinationRef.current?.value || "";
     const note = noteRef.current?.value || "";
-    const distance = distanceRef.current?.value || "";
-    const total = totalRef.current?.value || "";
+    const distance = Number(distanceRef.current?.value || "");
+    const total = Number(calculateTotal());
     const custName = custNameRef.current?.value || "";
     const custPhoneNo = custPhoneNoRef.current?.value || "";
-    const orderDate = new Date().toISOString();
-    const voucherId = voucherIdRef.current?.value || "";
-    const shipperId = shipperIdRef.current?.value || "";
-    const shipperCost = shipperCostRef.current?.value || "";
-    const orderItems = orderItemsRef.current?.value || "";
-    const employeeId = employeeIdRef.current?.value || "";
+    const orderDate = new Date().toISOString().split("T")[0];
+    const voucherId =  Number(voucherIdRef.current?.value || "");
+    const shipperId =  Number(shipperIdRef.current?.value || "");
+    const shipperCost =  Number(shipperCostRef.current?.value || "");
+    // const orderItems = orderItemsRef.current?.value || "";
+    const employeeId = info.id;
+    const orderItems = orders.map(({ id, quantity }) => ({
+      id,
+      quantity,
+    }));
+    const order_status_id = 2;
+    const cust_id = 1;
+
+    // const orderStatus
 
     if (!destination || !custName || !custPhoneNo) {
       setMessageType("error");
       setMessage("Vui lòng điền đầy đủ thông tin.");
       return;
     }
-
+    const orderData = {
+      destination,
+      note,
+      distance,
+      order_status_id,
+      total,
+      cust_id,
+      custName,
+      custPhoneNo,
+      orderDate,
+      voucherId,
+      shipperId,
+      shipperCost,
+      orderItems,
+      employeeId,
+    };
     // Tạo form data để gửi file ảnh
-    const formData = new FormData();
-    formData.append("Destination", destination);
-    formData.append("Note", note);
-    formData.append("Distance", distance);
-    formData.append("Total", total);
-    formData.append("custName", custName);
-    formData.append("custPhoneNo", custPhoneNo);
-    formData.append("OrderDate", orderDate);
-    formData.append("VoucherId", voucherId);
-    formData.append("ShipperId", shipperId);
-    formData.append("ShipperCost", shipperCost);
-    formData.append("OrderItems", orderItems);
-    formData.append("EmployeeId", employeeId);
+    // const formData = new FormData();
+    // formData.append("Destination", destination);
+    // formData.append("Note", note);
+    // formData.append("Distance", distance);
+    // formData.append("Total", total);
+    // formData.append("custName", custName);
+    // formData.append("custPhoneNo", custPhoneNo);
+    // formData.append("OrderDate", orderDate);
+    // formData.append("VoucherId", voucherId);
+    // formData.append("ShipperId", shipperId);
+    // formData.append("ShipperCost", shipperCost);
+    // formData.append("OrderItems", orderItems);
+    // formData.append("EmployeeId", employeeId);
 
     // Gửi thông tin đến backend (Node.js)
-    fetch("/api/orders", {
+    console.log(orderData);
+    fetch(`/api/v2/addOrder`, {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
     })
       .then((response) => {
         if (!response.ok) throw new Error("Failed to add order.");
@@ -94,7 +136,7 @@ const OrderForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <label>Địa điểm giao hàng:</label>
-          <input type="text" name="destination" ref={destinationRef}  />
+          <input type="text" name="destination" ref={destinationRef} />
         </div>
         <div>
           <label>Ghi chú:</label>
@@ -102,11 +144,11 @@ const OrderForm = () => {
         </div>
         <div>
           <label>Khoảng cách:</label>
-          <input type="number" name="distance" ref={distanceRef}  />
+          <input type="number" name="distance" ref={distanceRef} />
         </div>
         <div>
           <label>Tổng tiền:</label>
-          <input type="number" name="total" ref={totalRef} required />
+          <p> {calculateTotal()}</p>
         </div>
         <div>
           <label>Tên khách hàng:</label>
@@ -123,31 +165,27 @@ const OrderForm = () => {
         <div>
           <label>Voucher ID:</label>
           <select name="voucherId" ref={voucherIdRef}>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+            {/* {shippers2.map()} */}
+            {vouchers2.map((voucher) => (
+              <option value={voucher.id}>{voucher.name}</option>
+            ))}
           </select>
         </div>
         <div>
           <label>Shipper ID:</label>
-          <select name="shipperId" ref={shipperIdRef} >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
+          <select name="shipperId" ref={shipperIdRef}>
+            {shippers2.map((shipper) => (
+              <option value={shipper.id}>{shipper.name}</option>
+            ))}
           </select>
         </div>
         <div>
           <label>Chi phí giao hàng:</label>
-          <input
-            type="number"
-            name="shipperCost"
-            ref={shipperCostRef}
-            
-          />
+          <input type="number" name="shipperCost" ref={shipperCostRef} />
         </div>
         <div>
           <label>Chi tiết đơn hàng:</label>
-          <input type="text" name="orderItems" ref={orderItemsRef}  />
+          <input type="text" name="orderItems" ref={orderItemsRef} />
         </div>
         <div>
           {orders.map((product, index) => (
@@ -165,13 +203,8 @@ const OrderForm = () => {
                 <label>Giá:</label>
                 <p>{product.price}</p>
               </div>
-
-             
-
-              
             </div>
           ))}
-          
         </div>
         <div>
           <label>Nhân viên:</label>
@@ -185,7 +218,10 @@ const OrderForm = () => {
           </div>
         )}
 
-        <button className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]" type="submit">
+        <button
+          className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]"
+          type="submit"
+        >
           Xác nhận
         </button>
       </form>

@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
           <a href="/homepage/CreateAccount" className="menu_left">
             Tạo Tài Khoản Nhân viên
           </a>
-          <a href="#">Hồ sơ</a>
+          <a href="/homepage/AccountDetail">Hồ sơ</a>
 
           <a href="/">Thoát</a>
         </>
@@ -44,7 +44,7 @@ const Menu: React.FC = () => {
           <a href="/homepage/CreateProducts" className="menu_left">
             Thêm Sản Phẩm
           </a>
-          <a href="#">Hồ sơ</a>
+          <a href="/homepage/AccountDetail">Hồ sơ</a>
 
           <a href="/">Thoát</a>
         </>
@@ -58,7 +58,7 @@ const Menu: React.FC = () => {
             Nhập Kho
           </a>
 
-          <a href="#">Hồ sơ</a>
+          <a href="/homepage/AccountDetail">Hồ sơ</a>
 
           <a href="/">Thoát</a>
         </>
@@ -72,7 +72,7 @@ const Menu: React.FC = () => {
             Tạo Đơn Hàng
           </a>
 
-          <a href="#">Hồ sơ</a>
+          <a href="/homepage/AccountDetail">Hồ sơ</a>
 
           <a href="/">Thoát</a>
           <span
