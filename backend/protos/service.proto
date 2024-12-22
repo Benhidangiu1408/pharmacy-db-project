@@ -267,14 +267,14 @@ message insertBatchDataResponse {
 }
 
 message insertBatchDataRequest {
-  int32 warehouse_id = 1;
-  int32 product_id = 2;
-  int32 employee_id = 3;
-  int32 quantity = 4;
-  string type = 5;
-  string expiry_date = 6;
-  string manufacturing_date = 7;
-  double price = 8;
+  
+  int32 product_id = 1;
+  int32 employee_id = 2;
+  int32 quantity = 3;
+  string type = 4;
+  string expiry_date = 5;
+  string manufacturing_date = 6;
+  double price = 7;
 }
 
 message BatchResponse {
