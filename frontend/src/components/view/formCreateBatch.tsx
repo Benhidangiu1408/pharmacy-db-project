@@ -32,8 +32,8 @@ const BatchForm = () => {
     // Lấy giá trị từ các ref
     // const name = nameRef.current?.value || "";
     // const ID = IDRef.current?.value || "";
-    const price = priceRef.current?.value || "1";
-    const warehouseID = warehouseIDRef.current?.value || "1";
+    const price = priceRef.current?.value || "12";
+    // const warehouseID = warehouseIDRef.current?.value || "1";
     const productID = productIDRef.current?.value || "1";
     const quantity = quantityRef.current?.value || "1";
     const type = typeRef.current?.value || "Medicine";
@@ -41,10 +41,10 @@ const BatchForm = () => {
     const manufacturingDate = manufacturingDateRef.current?.value || "";
     const employeeID = employeeIDRef.current?.value || "";
 
-    if (parseInt(quantity, 10) < 1) {
-      setMessage("Số lượng phải lớn hơn hoặc bằng 1.");
-      return; // Không gửi form nếu quantity không hợp lệ
-    }
+    // if (parseInt(quantity, 10) < 1) {
+    //   setMessage("Số lượng phải lớn hơn hoặc bằng 1.");
+    //   return; // Không gửi form nếu quantity không hợp lệ
+    // }
 
     // const today = new Date();
     // const manufacturingDateObj = new Date(manufacturingDate);
@@ -55,7 +55,7 @@ const BatchForm = () => {
 
     const newBatch = {
       // name,
-      warehouseID: parseInt(warehouseID, 10) || null, // Giá trị null nếu không hợp lệ
+      // warehouseID: parseInt(warehouseID, 10) || null, // Giá trị null nếu không hợp lệ
       productID: parseInt(productID, 10) || null, // Giá trị null nếu không hợp lệ
       employeeID: parseInt(employeeID, 10) || null, // Giá trị null nếu không hợp lệ
       quantity: parseInt(quantity, 10) || 0, // Mặc định 0 nếu không hợp lệ
@@ -109,15 +109,15 @@ const BatchForm = () => {
             <option value="2">2</option>
             <option value="3">3</option>
           </select> */}
-          <input type="number" name="price" ref={priceRef} required />
+          <input type="number" name="price" ref={productIDRef} required />
         </div>
         <div>
-          <label>ID nhà kho:</label>
+          {/* <label>ID nhà kho:</label>
           <select name="number" ref={warehouseIDRef} required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-          </select>
+          </select> */}
         </div>
         <div>
           <label>ID nhân viên:</label>
