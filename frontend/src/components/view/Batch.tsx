@@ -191,7 +191,11 @@ const BatchView: React.FC = () => {
           );
         });
       }
-
+      const modifiedArray = results.map(obj => {
+        const { expiry_date, ...rest } = obj; // Use destructuring to remove Password
+        return rest;
+      });
+      results = modifiedArray
       setFilteredProducts(results);
     } else {
       setFilteredProducts([]);
