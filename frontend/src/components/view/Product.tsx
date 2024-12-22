@@ -46,13 +46,21 @@ const ProductView: React.FC = () => {
       var results
       if (searchKeywords.length > 0) {
         results = products.filter((product) =>
-          searchKeywords.some(keyword =>
-            product.name.toLowerCase().includes(keyword) ||
-            product.description.toLowerCase().includes(keyword) ||
-            product.product_type.toLowerCase().includes(keyword)||
-            product.origin.toLowerCase().includes(keyword)||
-            product.tag.toLowerCase().includes(keyword)
-          )
+          searchKeywords.some(keyword => {
+            if (!keyword) {
+              return false;
+            }
+            if (!isNaN(Number(keyword))) {
+              return product.id === Number(keyword);
+            }
+            return (
+              product.name.toLowerCase().includes(keyword) ||
+              product.description.toLowerCase().includes(keyword) ||
+              product.product_type.toLowerCase().includes(keyword) ||
+              product.origin.toLowerCase().includes(keyword) ||
+              product.tag.toLowerCase().includes(keyword)
+            );
+          })
         );
         console.log("results la ",results)
         setFilteredProducts(results);
@@ -60,8 +68,6 @@ const ProductView: React.FC = () => {
         setFilteredProducts(products);
       }
     }  else {
-      // Handle the case where products is not yet an array (e.g., set filteredProducts to an empty array)
-      // setFilteredProducts([]);
     }
   }, [searchTerm, products]);
 

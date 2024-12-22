@@ -89,6 +89,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAdminOrder, useEmployeeOrder } from "../../hooks/useOrders";
 import useUserStore from "../../current_data/user";
 import axios from "axios";
+import { FaSearch } from "react-icons/fa";
+import DateInput from "./DateTimeInput";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -121,6 +123,12 @@ const BatchView: React.FC = () => {
   // const quantityRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [ManuDate, setManuDate] = useState<Date | null>(null);
+  const [ExpDate, setExpDate] = useState<Date | null>(null);
+  const [OrderDate, setOrderDate] = useState<Date | null>(null);
+
   const handleEditProduct = (product: Product) => {
     navigate("/homepage/productdetail", { state: { product: product } });
   };
@@ -133,6 +141,11 @@ const BatchView: React.FC = () => {
     navigate("/restock/product", { state: { int: productId } });
   };
 
+  const handleManuDateChange = (date: Date | null) => {
+    setManuDate(date);
+    console.log("Selected Date Time: ", date?.toLocaleString());
+  };
+
   const addProduct = () => navigate("/homepage/CreateOrders");
 
   const [batches, setBatches] = useState([]);
@@ -140,12 +153,53 @@ const BatchView: React.FC = () => {
 
   const products = batches ? batches : [];
 
-  const generateId = () => {
-    if (products && products.length > 0) {
-      return Math.max(...products.map((p) => p.id)) + 1;
+  useEffect(() => {
+    if (products && Array.isArray(products)) {
+      let results = [...products]; // Start with all products
+
+      // Filter by search term
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const searchKeywords = lowerCaseSearchTerm
+        .split(" ")
+        .filter((keyword) => keyword.trim() !== "");
+
+      if (searchKeywords.length > 0) {
+        results = results.filter((product) =>
+          searchKeywords.some((keyword) => {
+            if (!keyword) {
+              return false;
+            }
+            if (!isNaN(Number(keyword))) {
+              return (
+                product.batch_id === Number(keyword) ||
+                product.warehouse_order_id === Number(keyword)
+              );
+            }
+            return false;
+          })
+        );
+      }
+
+      // Filter by Manufacturing Date
+      if (ManuDate) {
+        results = results.filter((product) => {
+          const productManuDate = new Date(product.manufacturing_date);
+          return (
+            productManuDate.getFullYear() === ManuDate.getFullYear() &&
+            productManuDate.getMonth() === ManuDate.getMonth() &&
+            productManuDate.getDate() === ManuDate.getDate()
+          );
+        });
+      }
+
+      setFilteredProducts(results);
     } else {
-      return 1;
+      setFilteredProducts([]);
     }
+  }, [searchTerm, ManuDate, products]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
   // Format date to "yyyy/mm/dd"
@@ -183,13 +237,54 @@ const BatchView: React.FC = () => {
     >
       <h1 className="title">Đơn Kho</h1>
 
+      <motion.div className="search-bar-container" variants={formVariants}>
+        <input
+          type="text"
+          placeholder="Tìm kiếm đơn kho..."
+          className="search-input"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <motion.i
+          className="search-icon"
+          animate={{ scale: 1.2, rotate: 360 }}
+          transition={{ repeat: 0, duration: 0.5 }}
+        >
+          <FaSearch />
+        </motion.i>
+      </motion.div>
+
+      <div className="date-input-container">
+        <div className="date-input-group">
+          <label htmlFor="manuDate">Manufacturing date:</label>
+          <DateInput
+            value={ManuDate}
+            onChange={handleManuDateChange}
+          />
+        </div>
+        <div className="date-input-group">
+          <label htmlFor="expDate">Expiry date:</label>
+          <DateInput
+            value={ExpDate}
+            onChange={handleManuDateChange}
+          />
+        </div>
+        <div className="date-input-group">
+          <label htmlFor="orderDate">Order date:</label>
+          <DateInput
+            value={OrderDate}
+            onChange={handleManuDateChange}
+          />
+        </div>
+      </div>
+
       <button className="toggle-form-button" onClick={() => addProduct()}>
         Thêm Đơn
       </button>
 
       {/* Using the JsonTable component */}
       <JsonTable
-        data={products}
+        data={filteredProducts}
         onEdit={handleEditProduct}
         onDelete={handleDeleteProduct}
       />

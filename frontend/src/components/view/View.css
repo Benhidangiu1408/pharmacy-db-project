@@ -244,3 +244,55 @@ html, body {
 .json-table__row:hover .json-table__action-buttons {
   animation: fadeIn 0.3s ease-out forwards;
 }
+
+/* styles.css or your preferred CSS file */
+.date-input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 2000px; /* Optional: Limit the width */
+}
+
+.date-input-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.date-input-group label {
+  font-weight: 600;
+  min-width: 120px; /* Adjust as needed for label width */
+  text-align: right;
+  color: #333;
+}
+
+/* Style the DateInput component if needed (assuming it's a custom component) */
+/* Example styling for a hypothetical DateInput */
+.date-input-group input[type="date"] {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #555;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.date-input-group input[type="date"]:focus {
+  outline: none;
+  border-color: #007bff; /* Example primary color */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Optional: Style for error states */
+/* .date-input-group.error input[type="date"] {
+  border-color: #dc3545;
+}
+
+.date-input-group.error label {
+  color: #dc3545;
+} */
