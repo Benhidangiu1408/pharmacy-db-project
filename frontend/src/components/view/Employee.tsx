@@ -72,9 +72,18 @@ const EmployeeView: React.FC = () => {
           })
         );
         console.log("results la ", results);
+        const modifiedArray = results.map(obj => {
+          const { password, ...rest } = obj; // Use destructuring to remove Password
+          return rest;
+        });
+        results = modifiedArray
         setFilteredProducts(results);
       } else {
-        setFilteredProducts(products);
+        const modifiedArray = products.map(obj => {
+          const { password, ...rest } = obj; // Use destructuring to remove Password
+          return rest;
+        });
+        setFilteredProducts(modifiedArray);
       }
     } else {
       // Handle the case where products is not yet an array (e.g., set filteredProducts to an empty array)
