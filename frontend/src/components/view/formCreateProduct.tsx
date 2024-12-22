@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./form.css";
 
 const ProductForm = () => {
@@ -33,17 +33,35 @@ const ProductForm = () => {
 
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("success");
+  const [nameError, setNameError] = useState<string | null>(null); // State for name error
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setNameError(null); // Clear any previous error
 
     // Lấy giá trị từ các ref
     const name = nameRef.current?.value || "";
+    // Validate name length
+    if (name.length > 16) {
+      setNameError("Tên sản phẩm không được quá 16 ký tự.");
+      return; // Stop submission if there's an error
+    }
+
     const description = descriptionRef.current?.value || "";
     const origin = originRef.current?.value || "";
     const tag = tagRef.current?.value || "";
+
+    if (tag.length > 16) {
+      setNameError("Tag sản phẩm không được quá 16 ký tự.");
+      return; // Stop submission if there's an error
+    }
     const storage_condition = storageConditionRef.current?.value || "";
     const country_of_origin = countryOfOriginRef.current?.value || "";
+
+    if (country_of_origin.length > 16) {
+      setNameError("Quốc gia sản xuất của sản phẩm không được quá 16 ký tự.");
+      return; // Stop submission if there's an error
+    }
     const price = priceRef.current?.value || "";
     const directions_for_use = directionsForUseRef.current?.value || "";
     const certificate = certificateRef.current?.value || "";
@@ -59,20 +77,28 @@ const ProductForm = () => {
       additionalData["consumable_constraindication"] = "";
     }
     if (product_type === "SUPPLEMENT") {
-      additionalData["supplement_allergen_info"] = allergenInfoRef.current?.value || "";
+      additionalData["supplement_allergen_info"] =
+        allergenInfoRef.current?.value || "";
     } else if (product_type === "MEDICINE") {
-      additionalData["medicine_side_effect"] = sideEffectRef.current?.value || "";
-      additionalData["medicine_indication"] = indicationRef.current?.value || "";
+      additionalData["medicine_side_effect"] =
+        sideEffectRef.current?.value || "";
+      additionalData["medicine_indication"] =
+        indicationRef.current?.value || "";
       additionalData["medicine_is_prescription_medicine"] =
         isPrescriptionMedicineRef.current?.value || "";
     } else if (product_type === "EQUIPMENT") {
       additionalData["medical_equipment_usage_instruction"] =
         usageInstructionRef.current?.value || "";
-      additionalData["medical_equipment_material"] = materialRef.current?.value || "";
-      additionalData["medical_equipment_size_dimension"] = sizeRef.current?.value || "";
-      additionalData["medical_equipment_requirement"] = requirementRef.current?.value || "";
-      additionalData["medical_equipment_warranty"] = warrantyRef.current?.value || "";
-      additionalData["medical_equipment_sterility"] = sterilityRef.current?.value || "";
+      additionalData["medical_equipment_material"] =
+        materialRef.current?.value || "";
+      additionalData["medical_equipment_size_dimension"] =
+        sizeRef.current?.value || "";
+      additionalData["medical_equipment_requirement"] =
+        requirementRef.current?.value || "";
+      additionalData["medical_equipment_warranty"] =
+        warrantyRef.current?.value || "";
+      additionalData["medical_equipment_sterility"] =
+        sterilityRef.current?.value || "";
     }
     const newProduct = {
       name,
@@ -86,7 +112,7 @@ const ProductForm = () => {
       certificate,
       warning,
       intended_user,
-      "total_amount_from_batch" : 0,
+      total_amount_from_batch: 0,
       product_type,
       ...additionalData,
     };
@@ -112,9 +138,17 @@ const ProductForm = () => {
     <div className="content-container">
       <h1>NHẬP THÔNG TIN SẢN PHẨM</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Tên sản phẩm:</label>
-          <input type="text" name="name" ref={nameRef} required />
+        <div className="form-group">
+          <label htmlFor="name">Tên sản phẩm:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            ref={nameRef}
+            required
+            className={nameError ? "error-input" : ""}
+          />
+          {nameError && <p className="error-message">{nameError}</p>}
         </div>
         <div>
           <label>Mô tả:</label>
@@ -147,7 +181,7 @@ const ProductForm = () => {
           />
         </div>
         <div>
-          <label>Giá:</label>
+          <label>Giá (USD):</label>
           <input type="number" name="price" ref={priceRef} required />
         </div>
         <div>
@@ -283,7 +317,10 @@ const ProductForm = () => {
             <p>{message}</p>
           </div>
         )}
-        <button className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]" type="submit">
+        <button
+          className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]"
+          type="submit"
+        >
           Xác nhận
         </button>
       </form>
