@@ -277,7 +277,7 @@ const getAllOrders = async (call, callback) => {
       product_quantity: order.Quantity,
       employee_name: order.Name,
     }));
-    console.log(orders)
+    console.log(orders);
     callback(null, { orders });
   } catch (error) {
     console.error("Database error:", error);
@@ -549,6 +549,81 @@ const addProduct = async (call, callback) => {
   }
 };
 
+const insertBatchData = async (call, callback) => {
+  const {
+    warehouse_id,
+    product_id,
+    employee_id,
+    quantity,
+    type,
+    expiry_date,
+    manufacturing_date,
+    price,
+  } = call.request;
+
+  try {
+    // Gọi procedure MySQL
+
+    console.log("Calling procedure with data:", {
+      warehouse_id,
+      product_id,
+      employee_id,
+      quantity,
+      type,
+      expiry_date,
+      manufacturing_date,
+      price,
+    });
+
+    await db.query(
+      `CALL batch_product.InsertBatchData(?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        warehouse_id,
+        product_id,
+        employee_id,
+        quantity,
+        type,
+        expiry_date,
+        manufacturing_date,
+        price,
+      ]
+    );
+
+    callback(null, console.log("Database saving successful"));
+  } catch (error) {
+    console.error("Database error:", error);
+    callback(
+      { code: 13 }, // INTERNAL
+      console.log("Database error")
+    );
+  }
+};
+
+const getBatchDetails = async (call, callback) => {
+  try {
+    const [results] = await db.query("CALL batch_product.GetBatchDetails()");
+    const batches = results[0].map((batch) => ({
+      batch_id: batch.Batch_ID,
+      cost: batch.Cost,
+      manufacturing_date: batch.Manufacturing_date,
+      expiry_date: batch.Expiry_date,
+      amount: batch.Amount,
+      warehouse_order_id: batch.WarehouseOrder_ID,
+      order_date: batch.Order_Date,
+      total_cost: batch.Total_cost,
+      inventory_mgr_id: batch.Inventory_mgr_ID,
+      order_type: batch.Order_Type,
+    }));
+    callback(null, { batches });
+  } catch (error) {
+    console.error("Database error:", error);
+    callback({
+      code: grpc.status.INTERNAL,
+      details: "Database error while fetching batch details",
+    });
+  }
+};
+
 module.exports = {
   fetchUsers,
   insertEmployee,
@@ -565,5 +640,7 @@ module.exports = {
   fetchProductList,
   signin,
   showVoucherInfo,
-  addProduct
+  addProduct,
+  insertBatchData,
+  getBatchDetails,
 };

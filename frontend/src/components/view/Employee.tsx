@@ -35,7 +35,7 @@ const formVariants = {
 const EmployeeView: React.FC = () => {
   //   const { isLoading, isError, data, error } = useProducts();
   const { data, isLoading, error } = useEmployees();
-  const products = data? data.employees : [];
+  const products = data ? data.employees : [];
   const nameRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLInputElement>(null);
   const quantityRef = useRef<HTMLInputElement>(null);

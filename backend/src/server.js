@@ -51,8 +51,8 @@ server.addService(databaseService.service, {
   Signin: signin,
   ShowVoucherInfo: showVoucherInfo,
   AddProduct: addProduct,
+  insertBatchData: insertBatchData,
   GetBatchDetails: getBatchDetails,
-  InsertBatchData: insertBatchData,
 });
 
 const PORT = 50051;
