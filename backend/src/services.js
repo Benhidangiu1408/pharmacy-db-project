@@ -551,7 +551,7 @@ const addProduct = async (call, callback) => {
 
 const insertBatchData = async (call, callback) => {
   const {
-    warehouse_id,
+    // warehouse_id,
     product_id,
     employee_id,
     quantity,
