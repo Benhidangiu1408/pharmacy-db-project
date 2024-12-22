@@ -113,7 +113,7 @@ const OrderView: React.FC = () => {
       <motion.div className="search-bar-container" variants={formVariants}>
         <input
           type="text"
-          placeholder="Tìm kiếm nhân viên..."
+          placeholder="Tìm kiếm theo đơn..."
           className="search-input"
           value={searchTerm}
           onChange={handleSearchChange}
