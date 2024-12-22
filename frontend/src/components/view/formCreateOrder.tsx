@@ -6,12 +6,12 @@ import useBatchStore from "../../current_data/batch";
 
 const OrderForm = () => {
   // Tạo các ref cho các input
-  const { getAllorders, logoutOrders} = useorderStore(); // Lấy hàm login
+  const { getAllorders, logoutOrders } = useorderStore(); // Lấy hàm login
   const { getInfo } = useUserStore(); // Lấy hàm login
-  const{logoutBatches}=useBatchStore()
+  const { logoutBatches } = useBatchStore();
 
   const orders = getAllorders();
-  const info=getInfo()
+  const info = getInfo();
 
   const destinationRef = useRef<HTMLInputElement>(null);
   const noteRef = useRef<HTMLInputElement>(null);
@@ -53,7 +53,23 @@ const OrderForm = () => {
       setMessage("Vui lòng điền đầy đủ thông tin.");
       return;
     }
-
+    const orderData = {
+      employee_id: 10,
+      destination,
+      note,
+      distance,
+      order_status_id,
+      total,
+      cust_id,
+      custName,
+      custPhoneNo,
+      orderDate,
+      voucherId,
+      shipperId,
+      shipperCost,
+      order_items,
+      employeeId,
+    };
     // Tạo form data để gửi file ảnh
     const formData = new FormData();
     formData.append("Destination", destination);
@@ -94,7 +110,7 @@ const OrderForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <label>Địa điểm giao hàng:</label>
-          <input type="text" name="destination" ref={destinationRef}  />
+          <input type="text" name="destination" ref={destinationRef} />
         </div>
         <div>
           <label>Ghi chú:</label>
@@ -102,7 +118,7 @@ const OrderForm = () => {
         </div>
         <div>
           <label>Khoảng cách:</label>
-          <input type="number" name="distance" ref={distanceRef}  />
+          <input type="number" name="distance" ref={distanceRef} />
         </div>
         <div>
           <label>Tổng tiền:</label>
@@ -130,7 +146,7 @@ const OrderForm = () => {
         </div>
         <div>
           <label>Shipper ID:</label>
-          <select name="shipperId" ref={shipperIdRef} >
+          <select name="shipperId" ref={shipperIdRef}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -138,16 +154,11 @@ const OrderForm = () => {
         </div>
         <div>
           <label>Chi phí giao hàng:</label>
-          <input
-            type="number"
-            name="shipperCost"
-            ref={shipperCostRef}
-            
-          />
+          <input type="number" name="shipperCost" ref={shipperCostRef} />
         </div>
         <div>
           <label>Chi tiết đơn hàng:</label>
-          <input type="text" name="orderItems" ref={orderItemsRef}  />
+          <input type="text" name="orderItems" ref={orderItemsRef} />
         </div>
         <div>
           {orders.map((product, index) => (
@@ -165,13 +176,8 @@ const OrderForm = () => {
                 <label>Giá:</label>
                 <p>{product.price}</p>
               </div>
-
-             
-
-              
             </div>
           ))}
-          
         </div>
         <div>
           <label>Nhân viên:</label>
@@ -185,7 +191,10 @@ const OrderForm = () => {
           </div>
         )}
 
-        <button className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]" type="submit">
+        <button
+          className="form_button bg-emerald-400 borderborder-black w-[80px] h-[40px]"
+          type="submit"
+        >
           Xác nhận
         </button>
       </form>
