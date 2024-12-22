@@ -224,7 +224,66 @@ app.post("/api/v2/updateDetailedPass/:id", async (req, res) => {
             res.status(500).send({ error: "Failed to fetch user data" });
           }
         });
+        app.post("/api/v2/disableEmployee/:id", async (req, res) => {
+            const id = req.params.id;
+          
+            try {
+              // Validate input
+          
+              // Query the database
+              //   const [results] = await db.query('SELECT * FROM cho WHERE id = ?', [id]);
+              //   const [results] = await db.query(
+              //     `CALL employee_prescription.ShowAllEmployees()`
+              //   );
+          
+              const [results] = await db.query(
+                `CALL employee_prescription.DisableEmployee(?)`,
+                [id]
+              );
+          
+              // Check if the result is found
+              if (results.length === 0) {
+                return res.status(404).send({ error: "No user found with the given ID" });
+              }
+          
+              res.json(results); // Return the first row
+            } catch (error) {
+              console.error("Database Error:", error);
+              res.status(500).send({ error: "Failed to fetch user data" });
+            }
+          });
 
+          app.post("/api/v2/disableProduct/:id", async (req, res) => {
+            const id = req.params.id;
+            console.log("nhinhi")
+          
+            try {
+              // Validate input
+          
+              // Query the database
+              //   const [results] = await db.query('SELECT * FROM cho WHERE id = ?', [id]);
+              //   const [results] = await db.query(
+              //     `CALL employee_prescription.ShowAllEmployees()`
+              //   );
+          
+              const [results] = await db.query(
+                `CALL batch_product.DisableProduct(?)`,
+                [id]
+              );
+          
+              // Check if the result is found
+              if (results.length === 0) {
+                return res.status(404).send({ error: "No user found with the given ID" });
+              }
+          
+              res.json(results); // Return the first row
+            } catch (error) {
+              console.error("Database Error:", error);
+              res.status(500).send({ error: "Failed to fetch user data" });
+            }
+          });
+
+        
 app.get("/api/v1/example/:id", (req, res) => {
   const id = req.params.id;
   client.GetUser({ id }, (err, response) => {

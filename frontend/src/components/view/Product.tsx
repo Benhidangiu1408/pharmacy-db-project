@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
@@ -34,6 +35,11 @@ const formVariants = {
 const ProductView: React.FC = () => {
   const { isLoading, isError, data, error } = useProducts();
   const products = data ? data.products : [];
+  // const nameRef = useRef<HTMLInputElement>(null);
+  // const categoryRef = useRef<HTMLInputElement>(null);
+  // const quantityRef = useRef<HTMLInputElement>(null);
+  // const navigate = useNavigate();
+
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,6 +92,23 @@ const ProductView: React.FC = () => {
     }
   };
 
+  const handleSubmit = async (productId:number) => {
+    // e.preventDefault();
+
+    // Lấy giá trị từ các ref
+    // const newPass = nameRef.current?.value || "";
+
+    console.log({productId})
+    fetch(`/api/v2/disableProduct/${productId.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: ,
+    })
+    
+  };
+
   var handleEditProduct;
   var handleDeleteProduct;
   var handleToggleRestock;
@@ -93,14 +116,19 @@ const ProductView: React.FC = () => {
     handleEditProduct = (product: Product) => {
       navigate("/homepage/productdetail", { state: { product: product } });
     };
-    handleDeleteProduct = (productId: number) => {
-      navigate("/delete/product", { state: { int: productId } });
-    };
-    handleToggleRestock = (productId: number) => {
-      navigate("/restock/product", { state: { int: productId } });
-    };
+    // handleDeleteProduct = (productId: number) => {
+    //   navigate("/delete/product", { state: { int: productId } });
+    // };
+
+    handleDeleteProduct = (productId: number) => (
+      
+      handleSubmit(productId)
+    );
+      // handleToggleRestock
   }
 
+
+  console.log("This is a", role);
   const addProduct = () => navigate("/homepage/CreateProducts");
 
   return (
