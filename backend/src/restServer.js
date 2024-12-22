@@ -154,6 +154,77 @@ app.get("/api/v2/showDetailedEmployee/:id", async (req, res) => {
       }
     });
 
+    app.post("/api/v2/addOrder", async (req, res) => {
+        // const id = req.params.id;
+        const {destination,
+            note,
+            distance,
+            order_status_id,
+            total,
+            cust_id,
+            custName,
+            custPhoneNo,
+            orderDate,
+            voucherId,
+            shipperId,
+            shipperCost,
+            orderItems,
+            employeeId}=req.body;
+        console.log({destination,
+            note,
+            distance,
+            order_status_id,
+            total,
+            cust_id,
+            custName,
+            custPhoneNo,
+            orderDate,
+            voucherId,
+            shipperId,
+            shipperCost,
+            orderItems,
+            employeeId})
+
+        console.log("nhi")
+          try {
+            // Validate input
+        
+            // Query the database
+            //   const [results] = await db.query('SELECT * FROM cho WHERE id = ?', [id]);
+          //   const [results] = await db.query(
+          //     `CALL employee_prescription.ShowAllEmployees()`
+          //   );
+      
+            const [results] = await db.query(
+                    `CALL order_cus_voucher.InsertOrder(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+                    [destination,
+                        note,
+                        distance,
+                        order_status_id,
+                        total,
+                        cust_id,
+                        custName,
+                        custPhoneNo,
+                        orderDate,
+                        voucherId,
+                        shipperId,
+                        shipperCost,
+                        JSON.stringify(orderItems),
+                        employeeId]
+                  );
+      
+            // Check if the result is found
+            if (results.length === 0) {
+              return res.status(404).send({ error: "No user found with the given ID" });
+            }
+        
+            res.json(results); // Return the first row
+          } catch (error) {
+            console.error("Database Error:", error);
+            res.status(500).send({ error: "Failed to fetch user data" });
+          }
+        });
+
 app.get("/api/v1/example/:id", (req, res) => {
   const id = req.params.id;
   client.GetUser({ id }, (err, response) => {
