@@ -2,6 +2,8 @@
   "dependencies": {
     "@chakra-ui/react": "^3.2.3",
     "cors": "^2.8.5",
-    "react-query": "^3.39.3"
+    "react-query": "^3.39.3",
+    "style-components": "^0.1.0",
+    "zustand": "^5.0.2"
   }
 }

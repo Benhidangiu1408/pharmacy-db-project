@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from 'react-router-dom';
-import JsonTable from "./jsonTable"; // Import the table component
+import { useNavigate } from "react-router-dom";
 import "./View.css";
 import useProducts from "../../hooks/useProducts";
 import { Product } from "../../entities/product";
 import useUserStore from "../../current_data/user";
+import JsonTable from "./jsonTable"; // Import the new table component
+import { FaSearch } from "react-icons/fa";
 
 // --- Framer Motion Variants ---
 const containerVariants = {
@@ -32,13 +33,43 @@ const formVariants = {
 // --- Main Component ---
 const ProductView: React.FC = () => {
   const { isLoading, isError, data, error } = useProducts();
-  const products = data? data.products : [];
-  const nameRef = useRef<HTMLInputElement>(null);
-  const categoryRef = useRef<HTMLInputElement>(null);
-  const quantityRef = useRef<HTMLInputElement>(null);
+  const products = data ? data.products : [];
   const navigate = useNavigate();
-  
-  const {info} = useUserStore();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (products && Array.isArray(products) && products.length>0) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      const searchKeywords = lowerCaseSearchTerm.split(" ").filter(keyword => keyword.trim() !== "");
+      var results
+      if (searchKeywords.length > 0) {
+        results = products.filter((product) =>
+          searchKeywords.some(keyword =>
+            product.name.toLowerCase().includes(keyword) ||
+            product.description.toLowerCase().includes(keyword) ||
+            product.product_type.toLowerCase().includes(keyword)||
+            product.origin.toLowerCase().includes(keyword)||
+            product.tag.toLowerCase().includes(keyword)
+          )
+        );
+        console.log("results la ",results)
+        setFilteredProducts(results);
+      } else {
+        setFilteredProducts(products);
+      }
+    }  else {
+      // Handle the case where products is not yet an array (e.g., set filteredProducts to an empty array)
+      // setFilteredProducts([]);
+    }
+  }, [searchTerm, products]);
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const { info } = useUserStore();
   const role = info.jobType;
 
   const generateId = () => {
@@ -53,13 +84,18 @@ const ProductView: React.FC = () => {
   var handleDeleteProduct;
   var handleToggleRestock;
   if (role == "product manager" || role == "admin") {
-    handleEditProduct = (product: Product) => {navigate('/homepage/productdetail', { state: { product: product } });};
-    handleDeleteProduct = (productId: number) => {navigate('/delete/product', { state: { int: productId } });};
-    handleToggleRestock = (productId: number) => {navigate('/restock/product', { state: { int: productId } });};
+    handleEditProduct = (product: Product) => {
+      navigate("/homepage/productdetail", { state: { product: product } });
+    };
+    handleDeleteProduct = (productId: number) => {
+      navigate("/delete/product", { state: { int: productId } });
+    };
+    handleToggleRestock = (productId: number) => {
+      navigate("/restock/product", { state: { int: productId } });
+    };
   }
 
-  console.log("This is a",role);
-  const addProduct =() => navigate("/homepage/CreateProducts");
+  const addProduct = () => navigate("/homepage/CreateProducts");
 
   return (
     <motion.div
@@ -70,13 +106,25 @@ const ProductView: React.FC = () => {
     >
       <h1 className="title">Sản Phẩm</h1>
 
+      <motion.div className="search-bar-container" variants={formVariants}>
+        <input
+          type="text"
+          placeholder="Tìm kiếm sản phẩm..."
+          className="search-input"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <motion.i className="search-icon" animate={{ scale: 1.2, rotate: 360 }} transition={{ repeat: 0, duration: 0.5 }}>
+          <FaSearch/>
+        </motion.i>
+      </motion.div>
+
       <button className="toggle-form-button" onClick={() => addProduct()}>
         Thêm Sản Phẩm
       </button>
 
-      {/* Using the JsonTable component */}
       <JsonTable
-        data={products}
+        data={filteredProducts}
         onEdit={handleEditProduct}
         onDelete={handleDeleteProduct}
       />
