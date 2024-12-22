@@ -28,7 +28,60 @@ html, body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-} 
+  transition: background-color 0.3s ease;
+}
+
+.toggle-form-button:hover {
+  background-color: #45a049;
+}
+
+/* Styles for the search bar */
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  overflow: hidden; /* To contain the effects */
+}
+
+.search-bar-container:focus-within {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+  flex-grow: 1;
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  color: #777;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease-in-out;
+}
+
+.search-icon:hover {
+  color: #333;
+  transform: scale(1.1);
+}
+
 /* Block: json-table */
 .json-table {
   width: 100%;
@@ -111,7 +164,6 @@ html, body {
     transition: transform 0.2s ease-in-out; /* Add transition for icon transform */
   }
 }
-
 
 /* Modifier: json-table edit button */
 .json-table__button--edit { /* Full class name */

@@ -49,7 +49,7 @@ const signin = async (call, callback) => {
       "CALL employee_prescription.Signin(?, ?)",
       [account, password]
     );
-
+    console.log(results)
     const SigninResponse = results[0][0];
     // Access the OUT parameters from the result set
     const empID = SigninResponse.ID;

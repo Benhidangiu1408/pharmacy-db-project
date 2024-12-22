@@ -275,7 +275,8 @@ CREATE TABLE `batch` (
   `WarehouseOrder_ID` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT `batch_chk_1` CHECK ((`Amount` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) 
+ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
