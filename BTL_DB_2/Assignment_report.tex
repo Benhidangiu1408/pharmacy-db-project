@@ -1,0 +1,254 @@
+\documentclass[a4paper,twoside]{article}
+\usepackage{vntex}
+%\usepackage[english,vietnam]{babel}
+%\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{setspace}
+%\usepackage[utf8]{inputenc}
+%\usepackage[francais]{babel}
+\onehalfspacing % Set line spacing to 1.5
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{float}
+\usepackage{a4wide,amssymb,epsfig,latexsym,multicol,array,hhline,fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{lastpage}
+\usepackage[lined,boxed,commentsnumbered]{algorithm2e}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{graphicx}							% Standard graphics package
+\usepackage{array}
+\usepackage{tabularx, caption}
+\usepackage{multirow}
+\usepackage[framemethod=tikz]{mdframed}% For highlighting paragraph backgrounds
+\usepackage{multicol}
+\usepackage{rotating}
+\usepackage{graphics}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{epsfig}
+\usepackage{tikz}
+\usepackage{listings}
+\usetikzlibrary{arrows,snakes,backgrounds}
+\usepackage{hyperref}
+\usepackage{scrextend}
+\changefontsizes{13pt}
+\usepackage{svg}
+\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} 
+%\usepackage{pstcol} 								% PSTricks with the standard color package
+
+\newtheorem{theorem}{{\bf Định lý}}
+\newtheorem{property}{{\bf Tính chất}}
+\newtheorem{proposition}{{\bf Mệnh đề}}
+\newtheorem{corollary}[proposition]{{\bf Hệ quả}}
+\newtheorem{lemma}[proposition]{{\bf Bổ đề}}
+
+\usepackage{adjustbox}
+
+% \everymath{\color{blue}}
+%\usepackage{fancyhdr}
+\setlength{\headheight}{40pt}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[L]{
+ \begin{tabular}{rl}
+    \begin{picture}(25,15)(0,0)
+    \put(0,-8){\includegraphics[width=8mm, height=8mm]{Images/hcmut.png}}
+    %\put(0,-8){\epsfig{width=10mm,figure=hcmut.eps}}
+   \end{picture}&
+	%\includegraphics[width=8mm, height=8mm]{hcmut.png} & %
+	\begin{tabular}{l}
+		\textbf{\bf \ttfamily Trường Đại Học Bách Khoa Tp.Hồ Chí Minh}\\
+		\textbf{\bf \ttfamily Khoa Khoa Học và Kỹ Thuật Máy Tính}
+	\end{tabular} 	
+ \end{tabular}
+}
+\fancyhead[R]{
+	\begin{tabular}{l}
+		\tiny \bf \\
+		\tiny \bf 
+	\end{tabular}  }
+\fancyfoot{} % clear all footer fields
+\fancyfoot[L]{\scriptsize \ttfamily BTL2 môn Hệ cơ sở dữ liệu - HK241 Năm học 2024-2025}
+\fancyfoot[R]{\scriptsize \ttfamily Trang {\thepage}/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+
+%%%
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+\makeatletter
+\newcounter {subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection .\@alph\c@subsubsubsection}
+\newcommand\subsubsubsection{\@startsection{subsubsubsection}{4}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\newcommand*\l@subsubsubsection{\@dottedtocline{3}{10.0em}{4.1em}}
+\newcommand*{\subsubsubsectionmark}[1]{}
+\makeatother
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{backcolor}{RGB}{212,235,242}
+\lstset{frame=tb,
+	language=R,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	numbers=left,
+	stepnumber=1,
+	numbersep=1pt,    
+	firstnumber=1,
+	numberfirstline=true,
+}
+
+\definecolor{codegray}{gray}{0.9} % Define codegray here before use
+\lstset{
+    basicstyle=\ttfamily\footnotesize,   % Font style and size
+    backgroundcolor=\color{codegray},     % Background color
+    frame=single,                        % Single-line frame
+    framerule=0.4pt,                     % Frame line thickness
+    framesep=5pt,                        % Space between frame and code
+    captionpos=b,                        % Caption position below the code
+    breaklines=true,                     % Enable line breaking if code is too long
+    numbers=left,                        % Line numbers on the left side
+    numberstyle=\color{gray},       % Style of line numbers
+    stepnumber=1,                        % Number lines every 1 line
+    numbersep=5pt,                       % Space between line numbers and code
+    tabsize=2,                           % Tab size
+    showstringspaces=false,               % Do not replace spaces in strings with symbols
+    language=sql,                      % Specify the code language
+    keywordstyle=\color{blue},             % Keywords color
+    commentstyle=\color{green!50!black},      % Comments color
+    stringstyle=\color{red!50!black}          % String color
+    %morekeywords={self,super} % Additional keywords, you may specify this line to highlight more keywords
+}
+
+\usepackage{indentfirst}
+\begin{document}
+\setlength{\parindent}{0.5cm}
+
+\begin{titlepage}
+\begin{center}
+ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH \\
+TRƯỜNG ĐẠI HỌC BÁCH KHOA \\
+KHOA KHOA HỌC - KỸ THUẬT MÁY TÍNH 
+\end{center}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale = 0.27]{Images/hcmut.png}
+\end{center}
+\end{figure}
+
+
+\begin{center}
+\begin{tabular}{c}
+	\multicolumn{1}{l}{\textbf{{\Large HỌC KỲ 241}}}\\
+	~~\\
+	\hline
+	\\
+	\multicolumn{1}{l}{\textbf{{\Large Bài tập lớn}}}\\
+	\\
+	\textbf{{\Huge HỆ CƠ SỞ DỮ LIỆU }}\\
+	\\
+	\hline
+\end{tabular}
+\end{center}
+
+\begin{table}[h]
+\begin{tabular}{rrll}
+\hspace{2.5 cm} & GVHD: &Nguyễn Thanh Tùng &\\
+& Lớp: & CN02 & Nhóm 06 \\
+% & Nhóm: & 06  &\\
+& SV: & Nguyễn Lê Vân Tú& 2252881\\
+& &   Huỳnh Minh Khoa& 2252346\\
+& &Thân Nguyễn Minh Khoa & 2252361\\
+& & Trần Lương Yến Nhi & 2252586\\
+ & & \\
+\end{tabular}
+\end{table}
+\begin{center}
+{\footnotesize TP. HỒ CHÍ MINH, THÁNG 12/2024}
+\end{center}
+\end{titlepage}
+
+
+\thispagestyle{empty}
+\section*{Phân chia công việc}
+
+% \begin{figure}[h!]
+%     \centering
+%     \hspace*{-1.5cm}
+%     \includegraphics[width=1.2\linewidth]{Phan_cong.png}
+%     % \caption{Enter Caption}
+%     \label{fig:enter-label}
+% \end{figure}
+
+% \begin{figure}[h!]
+%     \hspace*{-1.4cm}
+%     \includegraphics[width=1.2\linewidth]{Phan_cong_.png}
+%     % \caption{Enter Caption}
+%     \label{fig:enter-label}
+% \end{figure}
+
+\newpage
+
+
+\hspace*{-1cm}
+% \begin{adjustbox}{lap=0cm}
+
+% \setlength{\oddsidemargin}{-1cm} % Giảm lề trái 1cm
+% \setlength{\evensidemargin}{-1cm}
+
+\begin{table}[h]
+    \centering
+     % \hspace*{-1cm}
+
+    
+    \begin{tabular}{|p{1cm}|p{4cm}|p{1.5cm}|p{6cm}|p{1.5cm}|}
+   
+    \hline
+    STT  & Name & Student ID & Task & Com- mitment\\ \hline
+       1&Nguyễn Lê Vân Tú  & 2252881 & Packet Tracer/GNS3 simulation setup. Testing and validation (ping, traceroute, connectivity checks). Report writing and presentation preparation. & 25\%  \\ \hline 
+       2& Huỳnh Minh Khoa & 2252346 & Main Site Network Design (Part 1): Requirements analysis for Main Site. Initial topology design for Buildings A and B, Data Center. VLAN planning for Main Site. & 25\%  \\ \hline
+       3& Thân Nguyễn Minh Khoa &2252361  & Auxiliary Sites \& WAN: Requirements analysis for Auxiliary Sites. Topology design for Auxiliary Sites. WAN connection design (SD-WAN/MPLS, OSPF), 2xDSL with Load Balancing. & 25\%  \\ \hline 
+       4& Trần Lương Yến Nhi  & 2252586 & Main Site Network Design (Part 2) \& Security: Wireless network design for Main Site. Security implementation plan (firewall, IPS/IDS, DMZ). VPN configuration.& 25\% \\ \hline
+    \end{tabular}
+    % \caption{Caption}
+    \label{tab:my_label}
+\end{table}   
+% \end{adjustbox}
+
+\newpage
+\tableofcontents
+\newpage
+
+\input{Content/contents}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+

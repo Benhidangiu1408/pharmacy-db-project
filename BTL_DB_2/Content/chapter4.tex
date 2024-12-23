@@ -1,0 +1,40 @@
+\section{Tạo User và Xây dựng ứng dụng}
+\subsection{Kiến trúc hệ thống}
+\subsubsection{Database:}
+\subsubsubsection{Kiến trúc:}
+\begin{itemize}
+    \item Thực hiện trên mySQL workbench.
+    \item Được deploy trên Azure.
+    \item Các câu truy vấn sẽ được gọi thông qua các Procedure hoặc Function nhằm đảm bảo bảo mật, không để lộ các thông tin truy vấn ra ngoài. Bên cạnh đó cũng sẽ giúp cải thiện Performance khi thực hiện truy vấn. 
+    \item File code SQL đã được đính kèm trong bài nộp (Có thể chạy liền mạch từ đầu đến cuối code).
+\end{itemize}
+\subsubsubsection{Cách thực hiện:}
+49 bảng sẽ được phân thành 4 schema khác nhau ứng với từng chức năng riêng biệt: batch\_product, employee\_prescription, order\_cus\_voucher, warehouse. Qua đó có thể dễ dàng quản lý các bảng và phân chia cho nhiều thành viên thực hiện. 
+\subsubsection{Backend:}
+\subsubsubsection{Kiến trúc:}
+\begin{itemize}
+    \item Ngôn ngữ: Javascript
+    \item 2 Server: gRPC server và RestServer. Frontend sẽ truy cập vào endpoint được tạo trong RestServer, và thông qua đó RestServer sẽ gọi đến gRPC Server. Như vậy dữ liệu cũng sẽ được đảm bảo hơn. 
+\end{itemize}
+\subsubsection{Frontend:}
+\subsubsubsection{Kiến trúc:}
+\begin{itemize}
+    \item Ngôn ngữ: TypeScript
+    \item Gồm các lớp: entities (khai báo cấu trúc thực thể), service (đảm nhiệm vai trò kết nối với backend), hooks và các component.
+    \item Hệ thống cũng sẽ thực hiện theo mô hình MVC, tách biệt các page thực hiện chức năng và trang giao diện người dùng. 
+    \item Phối hợp giữa việc lưu local cho 1 session và lưu trên server để có thể tối ưu performance của hệ thống.
+\end{itemize}
+
+
+
+
+\subsection{Các luồng chức năng}
+Hệ thống sẽ gồm 4 nhóm người dùng cính.
+\begin{itemize}
+    \item Admin: Đây sẽ là người dùng có thể thực hiện mọi chức năng và thông tin. Chỉ có admin là người tạo tài khoản cho nhân viên và nhân viên sẽ dùng các tài khoản đó để đăng nhập vào.
+    \item Người quản lý sản phẩm: chỉ có thể xem được trang các sản phẩm và thêm, sửa hoặc xóa các sản phẩm. 
+    \item Người quản lý kho: sẽ có thể xem được trang các sản phẩm và chọn các sản phẩm này để thêm vào đơn kho
+    \item Nhân viên bán thuốc: sẽ là người xem được các sảm phẩm và từ các sản phẩm này sẽ tạo đơn thuốc cho khách hàng.
+\end{itemize}
+Ngoài ra, đối với các đơn kho khi nhập vào sẽ được kiểm tra hạn sử dụng, có còn nhập nữa không,... Bên cạnh đó, các đơn kho, đơn hàng cũng sẽ không được chỉnh sửa bởi bất kỳ ai để có thể minh bạch. 
+Đối với các sản phẩm, người quản lý sản phẩm cũng có thể điều chỉnh xem sản phẩm này còn nhập nữa không hoặc Admin có thể xóa tài khoản nhân viên này không.
